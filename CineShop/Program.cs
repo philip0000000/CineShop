@@ -9,6 +9,10 @@ namespace CineShop
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Sessions (needed for cart)
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
