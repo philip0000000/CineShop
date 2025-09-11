@@ -1,3 +1,7 @@
+using CineShop.DataBase;
+using Microsoft.EntityFrameworkCore;
+
+
 namespace CineShop
 {
     public class Program
@@ -8,6 +12,10 @@ namespace CineShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidCastException("Default Connection not found");
+
+            builder.Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
