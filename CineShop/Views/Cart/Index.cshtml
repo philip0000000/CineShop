@@ -1,7 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<CineShop.Models.CartItem>
 @{
+    ViewData["Title"] = "Your Cart";
+    var total = ViewBag.Total as decimal? ?? 0m;
 }
 
-TODO
+<h2>Your Cart</h2>
+
+@if (!Model.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Price* item.Quantity).ToString("C")</td>
+                    <td>
+                        <form asp-action="Add" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@item.MovieId" />
+                            <button type="submit" class="btn btn-sm btn-primary">+</button>
+                        </form>
+                        <form asp-action="Remove" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@item.MovieId" />
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p><strong>Total: @total.ToString("C")</strong></p>
+
+    <form asp-action="Checkout" method="get">
+        <button class="btn btn-success" type="submit">Checkout</button>
+    </form>
+}
