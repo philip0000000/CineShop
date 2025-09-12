@@ -17,7 +17,7 @@ namespace CineShop.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -42,8 +42,8 @@ namespace CineShop.Migrations
 
                     b.Property<string>("BillingZip")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("DeliveryAddress")
                         .IsRequired()
@@ -57,8 +57,8 @@ namespace CineShop.Migrations
 
                     b.Property<string>("DeliveryZip")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
@@ -83,6 +83,50 @@ namespace CineShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BillingAddress = "Storgatan 12",
+                            BillingCity = "Stockholm",
+                            BillingZip = "11122",
+                            DeliveryAddress = "Storgatan 12",
+                            DeliveryCity = "Stockholm",
+                            DeliveryZip = "11122",
+                            EmailAddress = "alice@example.com",
+                            FirstName = "Alice",
+                            LastName = "Andersson",
+                            PhoneNo = "+46701234567"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BillingAddress = "Kungsgatan 45",
+                            BillingCity = "Göteborg",
+                            BillingZip = "41115",
+                            DeliveryAddress = "Kungsgatan 45",
+                            DeliveryCity = "Göteborg",
+                            DeliveryZip = "41115",
+                            EmailAddress = "bjorn@example.com",
+                            FirstName = "Björn",
+                            LastName = "Bergström",
+                            PhoneNo = "+46709876543"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BillingAddress = "Lundavägen 8",
+                            BillingCity = "Malmö",
+                            BillingZip = "20520",
+                            DeliveryAddress = "Lundavägen 8",
+                            DeliveryCity = "Malmö",
+                            DeliveryZip = "20520",
+                            EmailAddress = "clara@example.com",
+                            FirstName = "Clara",
+                            LastName = "Carlsson",
+                            PhoneNo = "+46705551234"
+                        });
                 });
 
             modelBuilder.Entity("CineShop.Models.Movie", b =>
@@ -98,14 +142,20 @@ namespace CineShop.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("ReleaseYear")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ReleaseYear")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -115,6 +165,38 @@ namespace CineShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movie");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Director = "Eva Lindström",
+                            Genre = "Drama",
+                            Image = "https://example.com/images/northern-light.jpg",
+                            Price = 129.00m,
+                            ReleaseYear = 2022,
+                            Title = "The Northern Light"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Director = "Oskar Berg",
+                            Genre = "Drama",
+                            Image = "https://example.com/images/midnight-fjord.jpg",
+                            Price = 149.50m,
+                            ReleaseYear = 2023,
+                            Title = "Midnight Fjord"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Director = "Karin Nyström",
+                            Genre = "Drama",
+                            Image = "https://example.com/images/echoes-lapland.jpg",
+                            Price = 99.99m,
+                            ReleaseYear = 2021,
+                            Title = "Echoes of Lapland"
+                        });
                 });
 
             modelBuilder.Entity("CineShop.Models.Order", b =>
