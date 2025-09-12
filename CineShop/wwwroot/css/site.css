@@ -1,4 +1,4 @@
-html {
+/*html {
   font-size: 14px;
 }
 
@@ -19,4 +19,99 @@ html {
 
 body {
   margin-bottom: 60px;
+}*/
+/* Sayfa genel görünümü */
+body {
+    background-color: #000; /* siyah arka plan */
+    color: #f5f5f5; /* aç?k renk yaz?lar */
+    font-family: 'Segoe UI', sans-serif;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1; /* içerik ne kadar olursa olsun kalan alan? doldurur */
+}
+
+footer {
+    background-color: #f8f9fa; /* istedi?in renge göre de?i?tirebilirsin */
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Navbar özel tasar?m */
+.custom-navbar {
+    background-color: #000; /* siyah navbar */
+}
+
+    .custom-navbar .nav-link {
+        color: #FFD700 !important; /* sar? link */
+        font-weight: bold;
+    }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link.active {
+            color: #000 !important;
+            background-color: #FFD700; /* hover = sar? kutu */
+            border-radius: 5px;
+        }
+
+    /* Login/Register buton gibi */
+    .custom-navbar .login-link {
+        border: 1px solid #FFD700;
+        border-radius: 5px;
+        margin-left: 8px;
+        padding: 5px 12px;
+    }
+
+    .custom-navbar .register-link {
+        background-color: #FFD700;
+        color: #000 !important;
+        border-radius: 5px;
+        margin-left: 8px;
+        padding: 5px 12px;
+    }
+    .custom-navbar .nav-link {
+        font-size: 1.1rem; /* 1rem = normal, 1.1rem biraz daha büyük */
+    }
+
+    .custom-navbar .navbar-brand {
+        font-size: 1.4rem; /* Logo yaz?s? daha büyük görünsün */
+    }
+    .custom-navbar .navbar-brand {
+        font-size: 2rem; /* Daha büyük logo yaz?s? */
+        font-weight: bold; /* Kal?n */
+        color: #FFD700 !important; /* Alt?n sar?s? */
+    }
+
+.welcome-heading {
+    font-size: 3.5rem; /* büyük ba?l?k */
+    font-weight: 900; /* ekstra bold */
+    color: #ffc107; /* sar? */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* siyah gölge */
+    margin-bottom: 1rem;
+}
+
+.browse-btn {
+    background-color: #ffc107;
+    border: none;
+    color: #000;
+    padding: 12px 28px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+    .browse-btn:hover {
+        background-color: #e0a800; /* hover sar?s? */
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        transform: translateY(-2px);
+    }
