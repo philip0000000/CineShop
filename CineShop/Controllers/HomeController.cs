@@ -1,22 +1,37 @@
-using System.Diagnostics;
 using CineShop.Models;
+using CineShop.Services;
+using CineShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace CineShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
+            private readonly IStatisticsService _statisticsService;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+            public HomeController(IStatisticsService statisticsService)
+            {
+                _statisticsService = statisticsService;
+            }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+            public IActionResult Index()
+            {
+                var model = new HomeStatisticsViewModel
+                {
+                    MostPopularMovies = _statisticsService.GetFiveMostPopularMovies(5),
+                    NewestMovies = _statisticsService.GetFiveNewestMovies(5),
+                    OldestMovies = _statisticsService.GetFiveOldestMovies(5),
+
+                    CheapestMovies = _statisticsService.GetFiveCheapestMovies(5),
+                    TopSpendingCustomer = _statisticsService.GetTopCustomerByTotalSpend()
+                    // Add other properties as needed
+                };
+
+                return View(model);
+            }
+        
 
         public IActionResult Privacy()
         {

@@ -1,14 +1,14 @@
 /*!
   * Bootstrap v5.3.8 (https://getbootstrap.com/)
   * Copyright 2011-2025 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
   */
 import * as Popper from '@popperjs/core';
 
 /**
  * --------------------------------------------------------------------------
  * Bootstrap dom/data.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -56,7 +56,7 @@ const Data = {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/index.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -302,7 +302,7 @@ const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed
 /**
  * --------------------------------------------------------------------------
  * Bootstrap dom/event-handler.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -524,7 +524,7 @@ function hydrateObj(obj, meta = {}) {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap dom/manipulator.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -581,7 +581,7 @@ const Manipulator = {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/config.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -634,7 +634,7 @@ class Config {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap base-component.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -705,7 +705,7 @@ class BaseComponent extends Config {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap dom/selector-engine.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -794,7 +794,7 @@ const SelectorEngine = {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/component-functions.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -819,7 +819,7 @@ const enableDismissTrigger = (component, method = 'hide') => {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap alert.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -894,7 +894,7 @@ defineJQueryPlugin(Alert);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap button.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -958,7 +958,7 @@ defineJQueryPlugin(Button);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/swipe.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -1078,7 +1078,7 @@ class Swipe extends Config {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap carousel.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -1451,7 +1451,7 @@ defineJQueryPlugin(Carousel);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap collapse.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -1685,7 +1685,7 @@ defineJQueryPlugin(Collapse);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap dropdown.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -2053,7 +2053,7 @@ defineJQueryPlugin(Dropdown);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/backdrop.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -2177,7 +2177,7 @@ class Backdrop extends Config {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/focustrap.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -2275,7 +2275,7 @@ class FocusTrap extends Config {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/scrollBar.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -2373,7 +2373,7 @@ class ScrollBarHelper {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap modal.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -2678,7 +2678,7 @@ defineJQueryPlugin(Modal);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap offcanvas.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -2909,7 +2909,7 @@ defineJQueryPlugin(Offcanvas);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/sanitizer.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -3004,7 +3004,7 @@ function sanitizeHtml(unsafeHtml, allowList, sanitizeFunction) {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap util/template-factory.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -3140,7 +3140,7 @@ class TemplateFactory extends Config {
 /**
  * --------------------------------------------------------------------------
  * Bootstrap tooltip.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -3652,7 +3652,7 @@ defineJQueryPlugin(Tooltip);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap popover.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -3733,7 +3733,7 @@ defineJQueryPlugin(Popover);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap scrollspy.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -3993,7 +3993,7 @@ defineJQueryPlugin(ScrollSpy);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap tab.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 
@@ -4263,7 +4263,7 @@ defineJQueryPlugin(Tab);
 /**
  * --------------------------------------------------------------------------
  * Bootstrap toast.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * Movied under MIT (https://github.com/twbs/bootstrap/blob/main/Movie)
  * --------------------------------------------------------------------------
  */
 

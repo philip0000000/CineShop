@@ -1,4 +1,5 @@
 using CineShop.DataBase;
+using CineShop.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -22,8 +23,10 @@ namespace CineShop
 
             builder.Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionString));
 
-
+            builder.Services.AddScoped<IStatisticsService, StatisticsService>();
             var app = builder.Build();
+
+           
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

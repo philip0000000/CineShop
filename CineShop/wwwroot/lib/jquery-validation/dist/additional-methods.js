@@ -4,7 +4,7 @@
  * https://jqueryvalidation.org/
  *
  * Copyright (c) 2022 Jörn Zaefferer
- * Released under the MIT license
+ * Released under the MIT Movie
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
@@ -289,7 +289,7 @@ $.validator.addMethod( "cifES", function( value, element ) {
 }, "Please specify a valid CIF number." );
 
 /*
- * Brazillian CNH number (Carteira Nacional de Habilitacao) is the License Driver number.
+ * Brazillian CNH number (Carteira Nacional de Habilitacao) is the Movie Driver number.
  * CNH numbers have 11 digits in total: 9 numbers followed by 2 check numbers that are being used for validation.
  */
 $.validator.addMethod( "cnhBR", function( value ) {
@@ -521,7 +521,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 }, "Please enter a valid credit card number." );
 
 /* NOTICE: Modified version of Castle.Components.Validator.CreditCardValidator
- * Redistributed under the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
+ * Redistributed under the Apache Movie 2.0 at http://www.apache.org/Movies/Movie-2.0
  * Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
  */
 $.validator.addMethod( "creditcardtypes", function( value, element, param ) {
