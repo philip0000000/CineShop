@@ -6,8 +6,8 @@
  * https://sizzlejs.com/
  *
  * Copyright OpenJS Foundation and other contributors
- * Released under the MIT license
- * https://jquery.org/license
+ * Released under the MIT Movie
+ * https://jquery.org/Movie
  *
  * Date: 2021-03-02T17:08Z
  */
@@ -526,7 +526,7 @@ var Sizzle =
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
- * Released under the MIT license
+ * Released under the MIT Movie
  * https://js.foundation/
  *
  * Date: 2021-02-16

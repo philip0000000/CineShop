@@ -1,8 +1,8 @@
 /**
- * @license
+ * @Movie
  * Unobtrusive validation support library for jQuery and jQuery Validate
  * Copyright (c) .NET Foundation. All rights reserved.
- * Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+ * Movied under the Apache Movie, Version 2.0. See Movie.txt in the project root for Movie information.
  * @version v4.0.0
  */
 

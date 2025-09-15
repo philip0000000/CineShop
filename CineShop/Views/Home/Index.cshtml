@@ -1,4 +1,10 @@
-﻿@* @{
+﻿
+
+
+
+
+
+@* @{
     ViewData["Title"] = "Home Page";
 } *@
 
@@ -9,10 +15,10 @@
  *@
 
 @{
-    ViewData["Title"] = "Home Page";
+    // ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center my-5">
+@* <div class="text-center my-5">
     <h1 class="welcome-heading">
         Welcome to CineShop
     </h1>
@@ -26,4 +32,132 @@
             Browse Movies
         </a>
     </div>
+</div> *@
+@model CineShop.ViewModels.HomeStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Welcome Section -->
+<div class="text-center my-5">
+    <h1 class="welcome-heading">
+        Welcome to CineShop
+    </h1>
+    <p class="lead text-light">
+        Discover and purchase your favorite movies from our extensive collection—
+        from timeless classics to the latest blockbusters.
+    </p>
+
+    <div class="mt-4">
+        <a class="btn btn-warning btn-lg fw-bold browse-btn" asp-controller="Movies" asp-action="Index">
+            Browse Movies
+        </a>
+    </div>
 </div>
+
+<!-- Movie Highlights -->
+<div class="container py-4">
+    <h2 class="mb-4 text-center">🎥 CineShop Insights</h2>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <h5 class="text-primary">🔥 Most Popular</h5>
+            @if (Model.MostPopularMovies?.Any() == true)
+            {
+                <ul class="list-group">
+                    @foreach (var movie in Model.MostPopularMovies)
+                    {
+                        <li class="list-group-item">
+                            <strong>@movie.Title</strong> — @movie.Price.ToString("C")
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-muted">No popularity data available.</div>
+            }
+        </div>
+
+        <div class="col-md-3">
+            <h5 class="text-info">🆕 Newest Releases</h5>
+            @if (Model.NewestMovies?.Any() == true)
+            {
+                <ul class="list-group">
+                    @foreach (var movie in Model.NewestMovies)
+                    {
+                        <li class="list-group-item">
+                            <strong>@movie.Title</strong> (@movie.ReleaseYear)
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-muted">No recent movies found.</div>
+            }
+        </div>
+
+        <div class="col-md-3">
+            <h5 class="text-secondary">🧓 Oldest Titles</h5>
+            @if (Model.OldestMovies?.Any() == true)
+            {
+                <ul class="list-group">
+                    @foreach (var movie in Model.OldestMovies)
+                    {
+                        <li class="list-group-item">
+                            <strong>@movie.Title</strong> (@movie.ReleaseYear)
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-muted">No archival titles available.</div>
+            }
+        </div>
+
+        <div class="col-md-3">
+            <h5 class="text-success">💰 Cheapest Picks</h5>
+            @if (Model.CheapestMovies?.Any() == true)
+            {
+                <ul class="list-group">
+                    @foreach (var movie in Model.CheapestMovies)
+                    {
+                        <li class="list-group-item">
+                            <strong>@movie.Title</strong> — @movie.Price.ToString("C")
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-muted">No pricing data available.</div>
+            }
+        </div>
+    </div>
+
+    <!-- Top Customer by Spend -->
+    <div class="mb-5">
+        <h5 class="text-warning">👑 Top Customer</h5>
+        @if (Model.TopSpendingCustomer != null)
+        {
+            <div class="alert alert-warning d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>@Model.TopSpendingCustomer.Id</strong> has spent the most on movie purchases.
+                    <br />
+                    <span class="text-muted">Thank you for being our most loyal movie enthusiast!</span>
+                </div>
+                <i class="fas fa-crown fa-2x text-warning"></i>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-light">
+                No top spender data available yet.
+            </div>
+        }
+    </div>
+</div>
+

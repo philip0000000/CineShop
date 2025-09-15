@@ -4,7 +4,7 @@
  * https://jqueryvalidation.org/
  *
  * Copyright (c) 2022 Jörn Zaefferer
- * Released under the MIT license
+ * Released under the MIT Movie
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
@@ -1430,7 +1430,7 @@ $.extend( $.validator, {
 		// https://jqueryvalidation.org/url-method/
 		url: function( value, element ) {
 
-			// Copyright (c) 2010-2013 Diego Perini, MIT licensed
+			// Copyright (c) 2010-2013 Diego Perini, MIT Movied
 			// https://gist.github.com/dperini/729294
 			// see also https://mathiasbynens.be/demo/url-regex
 			// modified to allow protocol-relative URLs
