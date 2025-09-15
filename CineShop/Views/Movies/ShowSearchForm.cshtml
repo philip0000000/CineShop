@@ -1,5 +1,5 @@
 ﻿
-@* <h4>Search for Title</h4>
+<h4>Search for Title</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,9 +25,9 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
- *@
 
-@{
+
+@* @{
     ViewData["Title"] = "Search Movies";
 }
 
@@ -37,3 +37,4 @@
     <input type="text" name="searchPhrase" placeholder="Enter movie title" />
     <button type="submit">Search</button>
 </form>
+ *@

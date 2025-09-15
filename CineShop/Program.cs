@@ -26,6 +26,12 @@ namespace CineShop
             builder.Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+            builder.Services.AddScoped<IMovieService, MovieService>();
+
+           
+
+           
+
             var app = builder.Build();
 
            
