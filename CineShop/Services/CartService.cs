@@ -99,7 +99,7 @@ namespace CineShop.Services
         }
 
         /// <summary>
-        /// Total price of all items currently in the cart
+        /// Total price of all items currently in the cart.
         /// </summary>
         public decimal GetTotal()
         {

@@ -1,7 +1,17 @@
 ﻿@model IEnumerable<CineShop.Models.CartItem>
 @{
     ViewData["Title"] = "Your Cart";
-    var total = ViewBag.Total as decimal? ?? 0m;
+    
+    // total cart price
+    decimal total = 0m;
+    if (ViewBag.Total != null)
+    {
+        decimal parsedValue;
+        if (decimal.TryParse(ViewBag.Total.ToString(), out parsedValue))
+        {
+            total = parsedValue;
+        }
+    }
 }
 
 <h2>Your Cart</h2>
@@ -12,6 +22,7 @@
 }
 else
 {
+    <!-- Display shopping cart table -->
     <table class="table">
         <thead>
             <tr>
@@ -27,19 +38,20 @@ else
             {
                 <tr>
                     <td>@item.Title</td>
-                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.Price.ToString("C", new CultureInfo("sv-SE"))</td>
                     <td>@item.Quantity</td>
-                    <td>@(item.Price* item.Quantity).ToString("C")</td>
+                    <!-- multiply price with quantity to get item total -->
+                    <td>@(item.Price * item.Quantity).ToString("C")</td>
                     <td>
                         <form asp-action="Add" method="post" class="d-inline">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="movieId" value="@item.MovieId" />
-                            <button type="submit" class="btn btn-sm btn-primary">+</button>
+                            <button type="submit" class="btn btn-sm">+</button>
                         </form>
                         <form asp-action="Remove" method="post" class="d-inline">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="movieId" value="@item.MovieId" />
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
+                            <button type="submit" class="btn btn-sm">-</button>
                         </form>
                     </td>
                 </tr>
@@ -47,7 +59,8 @@ else
         </tbody>
     </table>
 
-    <p><strong>Total: @total.ToString("C")</strong></p>
+    <!-- total cart price -->
+    <p><strong>Total: @total.ToString("C", new CultureInfo("sv-SE"))</strong></p>
 
     <form asp-action="Checkout" method="get">
         <button class="btn btn-success" type="submit">Checkout</button>
