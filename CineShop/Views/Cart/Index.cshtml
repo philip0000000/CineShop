@@ -1,68 +1,27 @@
 ﻿@model IEnumerable<CineShop.Models.CartItem>
-@{
-    ViewData["Title"] = "Your Cart";
-    
-    // total cart price
-    decimal total = 0m;
-    if (ViewBag.Total != null)
-    {
-        decimal parsedValue;
-        if (decimal.TryParse(ViewBag.Total.ToString(), out parsedValue))
-        {
-            total = parsedValue;
-        }
-    }
-}
 
 <h2>Your Cart</h2>
 
-@if (!Model.Any())
-{
-    <p>Your cart is empty.</p>
-}
-else
-{
-    <!-- Display shopping cart table -->
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
+                <td>@item.Title</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@(item.Price* item.Quantity)</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Title</td>
-                    <td>@item.Price.ToString("C", new CultureInfo("sv-SE"))</td>
-                    <td>@item.Quantity</td>
-                    <!-- multiply price with quantity to get item total -->
-                    <td>@(item.Price * item.Quantity).ToString("C")</td>
-                    <td>
-                        <form asp-action="Add" method="post" class="d-inline">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@item.MovieId" />
-                            <button type="submit" class="btn btn-sm">+</button>
-                        </form>
-                        <form asp-action="Remove" method="post" class="d-inline">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@item.MovieId" />
-                            <button type="submit" class="btn btn-sm">-</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
-    <!-- total cart price -->
-    <p><strong>Total: @total.ToString("C", new CultureInfo("sv-SE"))</strong></p>
-
-    <form asp-action="Checkout" method="get">
-        <button class="btn btn-success" type="submit">Checkout</button>
-    </form>
-}
+<p><strong>Total:</strong> @ViewBag.Total</p>
