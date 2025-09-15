@@ -1,21 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CineShop.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CineShop.Controllers
 {
     public class CartController : Controller
     {
+        private readonly ICartService _cart;
+
+        public CartController(ICartService cart)
+        {
+            _cart = cart;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var items = _cart.GetItems();
+            ViewBag.Total = _cart.GetTotal();
+            return View(items);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Add(int movieId)
         {
-            return View();
+            _cart.Add(movieId);
+            return RedirectToAction("Index", "Cart");
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Remove(int movieId)
         {
-            return View();
+            _cart.Remove(movieId);
+            return RedirectToAction("Index", "Cart");
         }
+
         public IActionResult Checkout()
         {
             return View();

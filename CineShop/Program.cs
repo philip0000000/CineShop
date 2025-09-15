@@ -1,4 +1,5 @@
 using CineShop.DataBase;
+using CineShop.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,9 +15,11 @@ namespace CineShop
             builder.Services.AddControllersWithViews();
 
 
-            // Sessions (needed for cart)
+            // Sessions needed for cart
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
+            builder.Services.AddHttpContextAccessor(); // Access HttpContext inside Cart Services
+            builder.Services.AddScoped<ICartService, CartService>(); // Register cart service for Dependency Injection
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidCastException("Default Connection not found");
 
@@ -37,6 +40,8 @@ namespace CineShop
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession(); // enable session state (needed for cart)
 
             app.UseAuthorization();
 
