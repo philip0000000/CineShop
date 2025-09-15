@@ -37,7 +37,6 @@ namespace CineShop.Services
 
                 // Fetch only needed fields from database (Id, Title, Price)
                 var movie = _db.Movies
-                    .AsNoTracking() // Not to track the results of a query. (For performance gains.)
                     .Select(m => new { m.Id, m.Title, m.Price })
                     .FirstOrDefault(m => m.Id == movieId);
 
