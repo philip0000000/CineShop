@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-tools me-2"></i> Admin Dashboard
+    </h1>
+    <p class="lead text-light text-center mb-5">
+        Welcome back, curator. Choose a panel to manage your CineShop empire.
+    </p>
+
+    <div class="d-flex flex-column align-items-center gap-3">
+        <a asp-action="Movies" class="btn btn-warning btn-lg fw-bold px-4 rounded-pill shadow-sm">
+            <i class="fa fa-film me-2"></i> Manage Movies
+        </a>
+
+        <a asp-action="Customers" class="btn btn-warning btn-lg fw-bold px-4 rounded-pill shadow-sm">
+            <i class="fa fa-users me-2"></i> Manage Customers
+        </a>
+
+        <a asp-action="Orders" class="btn btn-warning btn-lg fw-bold px-4 rounded-pill shadow-sm">
+            <i class="fa fa-receipt me-2"></i> View Orders
+        </a>
+    </div>
+</div>

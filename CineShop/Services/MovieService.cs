@@ -24,7 +24,7 @@ namespace CineShop.Services
 
         public async Task AddAsync(Movie movie)
         {
-            _context.Movies.Add(movie);
+            object value = _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
         }
 

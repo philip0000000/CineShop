@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CineShop.Models.Order>
+
+@{
+    ViewData["Title"] = "All Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-receipt me-2"></i> All Orders
+    </h1>
+    <p class="lead text-light text-center mb-4">
+        Review every purchase made in CineShop—sorted from newest to oldest.
+    </p>
+
+    <div class="text-center mb-4">
+        <a asp-action="Index" class="btn btn-outline-light fw-semibold">
+            <i class="fa fa-arrow-left me-1"></i> Back to Admin Panel
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
+            <thead class="table-warning text-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total Items</th>
+                    <th>Total Price</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.OrderByDescending(o => o.OrderDate))
+                {
+                    var totalPrice = order.OrderRows.Sum(row => row.Price);
+
+                    <tr class="align-middle">
+                        <td class="text-light">@order.Id</td>
+                        <td class="text-light">@order.Customer.EmailAddress</td>
+                        <td class="text-light">@order.OrderDate.ToShortDateString()</td>
+                        <td class="text-light">@order.OrderRows.Count()</td>
+                        <td class="text-success fw-semibold">@totalPrice.ToString("C")</td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-info">
+                                    <i class="fa fa-info-circle me-1"></i> Details
+                                </a>
+                                <a asp-action="EditOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-warning">
+                                    <i class="fa fa-edit me-1"></i> Edit
+                                </a>
+                                <a asp-action="DeleteOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash me-1"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
