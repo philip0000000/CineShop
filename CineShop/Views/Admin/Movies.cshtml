@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CineShop.Models.Movie>
+
+@{
+    ViewData["Title"] = "Manage Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- 🎬 Header Section -->
+<div class="text-center my-5">
+    <h1 class="display-5 text-warning fw-bold">
+        <i class="fa fa-film me-2"></i> Movie Management
+    </h1>
+    <p class="lead text-light">
+        Curate your CineShop collection—add new titles, edit details, or remove outdated listings.
+    </p>
+
+    <div class="mt-4">
+        <a asp-action="AddMovie" class="btn btn-warning btn-lg fw-semibold me-2">
+            <i class="fa fa-plus-circle me-1"></i> Create New
+        </a>
+        <a asp-action="Index" class="btn btn-outline-light btn-lg fw-semibold">
+            <i class="fa fa-arrow-left me-1"></i> Back to Admin Panel
+        </a>
+    </div>
+</div>
+
+<!-- 🎞️ Movie Table -->
+<div class="container py-4">
+    <h2 class="text-center text-warning mb-4">Your Movie Listings</h2>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
+            <thead class="table-warning text-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Director</th>
+                    <th>Release Year</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var movie in Model)
+                {
+                    <tr class="align-middle">
+                        <td class="text-light">@movie.Title</td>
+                        <td class="text-light">@movie.Genre</td>
+                        <td class="text-light">@movie.Director</td>
+                        <td class="text-light">@movie.ReleaseYear</td>
+                        <td class="text-success fw-semibold">@movie.Price.ToString("C")</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(movie.Image))
+                            {
+                                <img src="@movie.Image" alt="Movie Poster" class="img-thumbnail" style="max-height: 80px;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No image</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="EditMovie" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-warning me-2">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-info me-2">
+                                <i class="fa fa-info-circle"></i> Details
+                            </a>
+                            <a asp-action="DeleteMovie" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-danger">
+                                <i class="fa fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

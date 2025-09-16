@@ -61,7 +61,7 @@ namespace CineShop.Services
                 .OrderByDescending(c =>
                     c.Orders
                      .SelectMany(o => o.OrderRows)
-                     .Sum(or => or.Movie.Price))
+                     .Sum(or => or.Movie.Price))                
                 .FirstOrDefault();
         }
     }

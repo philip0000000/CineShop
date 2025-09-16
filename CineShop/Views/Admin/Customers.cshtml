@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CineShop.Models.Customer>
+
+@{
+    ViewData["Title"] = "Manage Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-users me-2"></i> Customer Directory
+    </h1>
+    <p class="lead text-light text-center mb-4">
+        View and manage all CineShop customers—from billing details to delivery preferences.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3 mb-4">
+        <a asp-action="Index" class="btn btn-outline-light">
+            <i class="fa fa-arrow-left me-1"></i> Back to Admin Panel
+        </a>
+        <a asp-action="AddCustomer" class="btn btn-warning fw-bold">
+            <i class="fa fa-user-plus me-1"></i> Add New Customer
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
+            <thead class="table-warning text-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Billing Address</th>
+                    <th>Billing City</th>
+                    <th>Billing Zip</th>
+                    <th>Delivery Address</th>
+                    <th>Delivery City</th>
+                    <th>Delivery Zip</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="align-middle">
+                        <td class="text-light">@item.FirstName</td>
+                        <td class="text-light">@item.LastName</td>
+                        <td class="text-light">@item.BillingAddress</td>
+                        <td class="text-light">@item.BillingCity</td>
+                        <td class="text-light">@item.BillingZip</td>
+                        <td class="text-light">@item.DeliveryAddress</td>
+                        <td class="text-light">@item.DeliveryCity</td>
+                        <td class="text-light">@item.DeliveryZip</td>
+                        <td class="text-light">@item.EmailAddress</td>
+                        <td class="text-light">@item.PhoneNo</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning me-2">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info me-2">
+                                <i class="fa fa-info-circle"></i> Details
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                                <i class="fa fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

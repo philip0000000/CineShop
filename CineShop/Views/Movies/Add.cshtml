@@ -1,48 +1,64 @@
 ﻿@model CineShop.Models.Movie
 
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Director)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Director)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseYear)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+@{
+    ViewData["Title"] = "Add to Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-shopping-cart me-2"></i> Add to Cart
+    </h1>
+    <p class="lead text-light text-center mb-4">
+        You're about to add <span class="text-warning fw-semibold">@Model.Title</span> to your CineShop cart.
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark text-light border-warning shadow-sm">
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3 text-warning">Title</dt>
+                        <dd class="col-sm-9">@Model.Title</dd>
+
+                        <dt class="col-sm-3 text-warning">Genre</dt>
+                        <dd class="col-sm-9">@Model.Genre</dd>
+
+                        <dt class="col-sm-3 text-warning">Director</dt>
+                        <dd class="col-sm-9">@Model.Director</dd>
+
+                        <dt class="col-sm-3 text-warning">Price</dt>
+                        <dd class="col-sm-9 text-success fw-semibold">@Model.Price.ToString("C")</dd>
+
+                        <dt class="col-sm-3 text-warning">Poster</dt>
+                        <dd class="col-sm-9">
+                            @if (!string.IsNullOrEmpty(Model.Image))
+                            {
+                                <img src="@Model.Image" alt="Movie Poster" class="img-thumbnail" style="max-height: 200px;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No image available</span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <form asp-action="Add" method="post" class="mt-4">
+                        <input type="hidden" name="movieId" value="@Model.Id" />
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning fw-bold">
+                                <i class="fa fa-cart-plus me-2"></i> Confirm Add to Cart
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <a asp-action="Index" class="btn btn-outline-light">
+                            <i class="fa fa-arrow-left me-1"></i> Back to Movie List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

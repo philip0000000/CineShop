@@ -109,6 +109,7 @@ namespace CineShop.DataBase
 
 
         }
+        public DbSet<CineShop.Models.User> User { get; set; } = default!;
     }
 
 }

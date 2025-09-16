@@ -10,12 +10,12 @@ namespace CineShop.Services
     {
         private const string CartKey = "cart";
         private readonly IHttpContextAccessor _http;
-        private readonly MovieDbContext _db;
+        private readonly MovieDbContext _context;
 
         public CartService(IHttpContextAccessor http, MovieDbContext db)
         {
             _http = http;
-            _db = db;
+            _context = db;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace CineShop.Services
                 // Add new CartItem, because it is not in the cart.
 
                 // Fetch only needed fields from database (Id, Title, Price)
-                var movie = _db.Movies
+                var movie = _context.Movies
                     .Select(m => new { m.Id, m.Title, m.Price })
                     .FirstOrDefault(m => m.Id == movieId);
 

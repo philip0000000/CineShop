@@ -1,5 +1,6 @@
 ﻿using CineShop.Models;
 using CineShop.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,14 +18,14 @@ namespace CineShop.Controllers
             _cartService = cartService;
         }
 
-        //List of Movies
+        // 🟡 Public: List all movies
         public async Task<IActionResult> Index()
         {
             var movies = await _movieService.GetAllAsync();
             return View(movies);
         }
 
-       //Movies/Details/5
+        // 🟡 Public: View movie details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -35,86 +36,14 @@ namespace CineShop.Controllers
             return View(movie);
         }
 
-      
-        [HttpGet]
-        public IActionResult AddNewMovie()
-        {
-            return View();
-        }
-
-       
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddNewMovie(Movie movie)
-        {
-            if (!ModelState.IsValid) return View(movie);
-
-            await _movieService.AddAsync(movie);
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var movie = await _movieService.GetByIdAsync(id.Value);
-            if (movie == null) return NotFound();
-
-            return View(movie);
-        }
-
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Movie movie)
-        {
-            if (id != movie.Id) return NotFound();
-            if (!ModelState.IsValid) return View(movie);
-
-            try
-            {
-                await _movieService.UpdateAsync(movie);
-            }
-            catch
-            {
-                if (!await _movieService.ExistsAsync(movie.Id))
-                    return NotFound();
-                throw;
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var movie = await _movieService.GetByIdAsync(id.Value);
-            if (movie == null) return NotFound();
-
-            return View(movie);
-        }
-
-       
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            await _movieService.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
-
-        //TO DO
+        // 🟡 Public: Show search form
         [HttpGet]
         public IActionResult ShowSearchForm()
         {
             return View();
         }
 
-        // POST: /Movies/ShowSearchResult
+        // 🟡 Public: Handle search result
         [HttpPost]
         public async Task<IActionResult> ShowSearchResult(string searchPhrase)
         {
@@ -125,7 +54,8 @@ namespace CineShop.Controllers
             return View("Index", results);
         }
 
-        // POST: /Movies/Add (adds to cart)//Done
+        // 🟡 Public (Authenticated): Add movie to cart
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(int movieId)

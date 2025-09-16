@@ -1,0 +1,49 @@
+﻿@model CineShop.Models.User
+
+@{
+    ViewData["Title"] = "Register User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-user-plus me-2"></i> Register New User
+    </h1>
+    <p class="lead text-light text-center mb-4">
+        Create a CineShop account to unlock admin features and manage your movie universe.
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card bg-dark text-light border-warning shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Register">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="UserName" class="form-label text-warning fw-semibold"></label>
+                            <input asp-for="UserName" class="form-control bg-dark text-light border-warning" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label text-warning fw-semibold"></label>
+                            <input asp-for="Password" type="password" class="form-control bg-dark text-light border-warning" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <input type="submit" value="Create" class="btn btn-warning fw-bold" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a asp-action="Index" class="btn btn-outline-light">
+                    <i class="fa fa-arrow-left me-1"></i> Back to User List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

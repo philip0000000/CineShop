@@ -1,0 +1,55 @@
+﻿@model CineShop.Models.Movie
+
+@{
+    ViewData["Title"] = "Delete Movie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h2 class="text-danger text-center fw-bold mb-4">
+        <i class="fa fa-trash-alt me-2"></i> Delete Movie
+    </h2>
+    <p class="text-light text-center mb-4">
+        Are you sure you want to delete <span class="text-warning fw-semibold">@Model.Title</span>? This can't be undone.
+    </p>
+
+    <div class="card bg-dark text-light border-danger shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 text-warning">Title</dt>
+                <dd class="col-sm-8">@Model.Title</dd>
+
+                <dt class="col-sm-4 text-warning">Genre</dt>
+                <dd class="col-sm-8">@Model.Genre</dd>
+
+                <dt class="col-sm-4 text-warning">Director</dt>
+                <dd class="col-sm-8">@Model.Director</dd>
+
+                <dt class="col-sm-4 text-warning">Year</dt>
+                <dd class="col-sm-8">@Model.ReleaseYear</dd>
+
+                <dt class="col-sm-4 text-warning">Price</dt>
+                <dd class="col-sm-8 text-success fw-semibold">@Model.Price.ToString("C")</dd>
+
+                <dt class="col-sm-4 text-warning">Poster</dt>
+                <dd class="col-sm-8">
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="@Model.Image" alt="Poster" class="img-thumbnail" style="max-height: 150px;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">No image</span>
+                    }
+                </dd>
+            </dl>
+
+            <<form asp-action="DeleteMovie" method="post" onsubmit="return confirm('Are you sure you want to delete this movie?')">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-action="Movies" class="btn btn-outline-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
