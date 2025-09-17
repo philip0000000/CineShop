@@ -22,8 +22,8 @@ body {
 }*/
 /* Sayfa genel görünümü */
 body {
-    background-color: #000; /* siyah arka plan */
-    color: #f5f5f5; /* aç?k renk yaz?lar */
+    background-color: #000; 
+    color: #f5f5f5; 
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -38,8 +38,7 @@ body {
 }
 
 .main-content {
-    flex: 1; /* içerik ne kadar olursa olsun kalan alan? doldurur */
-}
+    flex: 1; 
 
 footer {
     background-color: #f8f9fa; /* istedi?in renge göre de?i?tirebilirsin */

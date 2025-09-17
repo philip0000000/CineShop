@@ -16,10 +16,12 @@
 
     <div class="mt-4">
         <a asp-action="AddMovie" class="btn btn-warning btn-lg fw-semibold me-2">
-            <i class="fa fa-plus-circle me-1"></i> Create New
+            <i class="fa fa-plus-circle me-1"></i> Add New Movie
         </a>
-        <a asp-action="Index" class="btn btn-outline-light btn-lg fw-semibold">
-            <i class="fa fa-arrow-left me-1"></i> Back to Admin Panel
+        <a asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
+            <i class="fa fa-tools me-2"></i>
+
+            Back to Admin Panel
         </a>
     </div>
 </div>
@@ -62,13 +64,13 @@
                         </td>
                         <td class="text-center">
                             <a asp-action="EditMovie" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-warning me-2">
-                                <i class="fa fa-edit"></i> Edit
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                             <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-info me-2">
-                                <i class="fa fa-info-circle"></i> Details
+                                <i class="fa-solid fa-circle-info"></i>
                             </a>
                             <a asp-action="DeleteMovie" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-danger">
-                                <i class="fa fa-trash-alt"></i> Delete
+                                <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
                     </tr>

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- 🎬 Welcome Section -->
+
 <div class="text-center my-5">
     <h1 class="display-4 text-warning fw-bold">
         Welcome to CineShop
@@ -21,12 +21,12 @@
     </div>
 </div>
 
-<!-- 📊 Movie Highlights -->
+
 <div class="container py-4">
     <h2 class="text-center text-warning mb-5">CineShop Insights</h2>
 
     <div class="row g-4 mb-5">
-        <!-- Most Popular -->
+      
         <div class="col-md-3">
             <h5 class="text-warning"><i class="fa fa-fire me-2"></i> Most Popular</h5>
             @if (Model.MostPopularMovies?.Any() == true)
@@ -46,7 +46,7 @@
             }
         </div>
 
-        <!-- Newest Releases -->
+      
         <div class="col-md-3">
             <h5 class="text-info"><i class="fa fa-calendar-plus me-2"></i> Newest Releases</h5>
             @if (Model.NewestMovies?.Any() == true)
@@ -66,7 +66,7 @@
             }
         </div>
 
-        <!-- Oldest Titles -->
+        
         <div class="col-md-3">
             <h5 class="text-secondary"><i class="fa fa-hourglass-start me-2"></i> Oldest Titles</h5>
             @if (Model.OldestMovies?.Any() == true)
@@ -86,7 +86,7 @@
             }
         </div>
 
-        <!-- Cheapest Picks -->
+       
         <div class="col-md-3">
             <h5 class="text-success"><i class="fa fa-coins me-2"></i> Cheapest Picks</h5>
             @if (Model.CheapestMovies?.Any() == true)
@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <!-- 👑 Top Customer -->
+   
     <div class="mb-5">
         <h5 class="text-warning"><i class="fa fa-crown me-2"></i> Top Customer</h5>
         @if (Model.TopSpendingCustomer != null)

@@ -18,14 +18,12 @@ namespace CineShop.Controllers
             _cartService = cartService;
         }
 
-        // 🟡 Public: List all movies
+        //List all movies
         public async Task<IActionResult> Index()
         {
             var movies = await _movieService.GetAllAsync();
             return View(movies);
-        }
-
-        // 🟡 Public: View movie details
+        }     
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -36,14 +34,12 @@ namespace CineShop.Controllers
             return View(movie);
         }
 
-        // 🟡 Public: Show search form
         [HttpGet]
         public IActionResult ShowSearchForm()
         {
             return View();
         }
 
-        // 🟡 Public: Handle search result
         [HttpPost]
         public async Task<IActionResult> ShowSearchResult(string searchPhrase)
         {
@@ -54,8 +50,7 @@ namespace CineShop.Controllers
             return View("Index", results);
         }
 
-        // 🟡 Public (Authenticated): Add movie to cart
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(int movieId)
