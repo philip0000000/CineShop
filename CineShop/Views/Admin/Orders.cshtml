@@ -14,10 +14,10 @@
     </p>
 
     <div class="text-center mb-4">
-        <a asp-action="Index" class="btn btn-warning fw-bold">
-            <i class="fa-solid fa-arrow-left"></i>
-            Back to Admin Panel
-        </a>
+       <a asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
+          <i class="fa fa-tools me-2"></i>Back to Admin Panel
+       </a>
+     
     </div>
 
     <div class="table-responsive">
@@ -35,26 +35,25 @@
             <tbody>
                 @foreach (var order in Model.OrderByDescending(o => o.OrderDate))
                 {
-                    var totalPrice = order.OrderRows.Sum(row => row.Price);
+                    var totalPrice = order.OrderRows?.Sum(row => row.Price) ?? 0;
+                    var customerEmail = order.Customer != null ? order.Customer.EmailAddress : "Unknown";
 
                     <tr class="align-middle">
                         <td class="text-light">@order.Id</td>
-                        <td class="text-light">@order.Customer.EmailAddress</td>
+                        <td class="text-light">@customerEmail</td>
                         <td class="text-light">@order.OrderDate.ToShortDateString()</td>
-                        <td class="text-light">@order.OrderRows.Count()</td>
+                        <td class="text-light">@order.OrderRows?.Count() ?? 0</td>
                         <td class="text-success fw-semibold">@totalPrice.ToString("C")</td>
                         <td class="text-center">
-                            <div class="btn-group" role="group">
-                                <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-info">
-                                    <i class="fa fa-info-circle me-1"></i> Details
-                                </a>
-                                <a asp-action="EditOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-warning">
-                                    <i class="fa fa-edit me-1"></i> Edit
-                                </a>
-                                <a asp-action="DeleteOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-danger">
-                                    <i class="fa fa-trash me-1"></i> Delete
-                                </a>
-                            </div>
+                            <a asp-action="EditOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-warning me-2" title="Edit Order">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@order.Id" class="btn btn-sm btn-outline-info me-2" title="View Details">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </a>
+                            <a asp-action="DeleteOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-danger" title="Delete Order">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 }
