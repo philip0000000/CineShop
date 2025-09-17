@@ -61,7 +61,7 @@ namespace CineShop.Models
         [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 characters.")]
         public string PhoneNo { get; set; }
 
-        // Optional: Navigation property to Orders
+        //Navigation property to Orders
         public List<Order> Orders { get; set; } = new List<Order>();
 
 

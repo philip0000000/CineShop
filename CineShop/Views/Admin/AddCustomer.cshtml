@@ -1,0 +1,110 @@
+﻿@model CineShop.Models.Customer
+
+@{
+    ViewData["Title"] = "Add New Customer";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark text-light border-warning shadow-lg">
+                <div class="card-header text-warning fw-bold">
+                    <i class="fa fa-user-plus me-2"></i> Add New Customer
+                </div>
+               
+                <div class="card-body">
+                    <form asp-controller="Admin" asp-action="AddCustomer" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FirstName" class="form-label text-light"></label>
+                                <input asp-for="FirstName" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="LastName" class="form-label text-light"></label>
+                                <input asp-for="LastName" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <h5 class="text-warning mt-4">Billing Information</h5>
+                        <div class="mb-3">
+                            <label asp-for="BillingAddress" class="form-label text-light"></label>
+                            <input asp-for="BillingAddress" class="form-control bg-dark text-light border-warning" />
+                            <span asp-validation-for="BillingAddress" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="BillingCity" class="form-label text-light"></label>
+                                <input asp-for="BillingCity" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="BillingCity" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="BillingZip" class="form-label text-light"></label>
+                                <input asp-for="BillingZip" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="BillingZip" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <h5 class="text-warning mt-4">Delivery Information</h5>
+                        <div class="mb-3">
+                            <label asp-for="DeliveryAddress" class="form-label text-light"></label>
+                            <input asp-for="DeliveryAddress" class="form-control bg-dark text-light border-warning" />
+                            <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DeliveryCity" class="form-label text-light"></label>
+                                <input asp-for="DeliveryCity" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="DeliveryCity" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DeliveryZip" class="form-label text-light"></label>
+                                <input asp-for="DeliveryZip" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="DeliveryZip" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <h5 class="text-warning mt-4">Contact Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="EmailAddress" class="form-label text-light"></label>
+                                <input asp-for="EmailAddress" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PhoneNo" class="form-label text-light"></label>
+                                <input asp-for="PhoneNo" class="form-control bg-dark text-light border-warning" />
+                                <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+
+
+                            <button type="submit" class="btn btn-warning fw-bold">
+                                <i class="fa-solid fa-floppy-disk"></i> Save Customer
+                            </button>
+                        </div>
+
+                        
+                    </form>
+                    <div class="text-center mt-4">
+                        <a asp-controller="Admin" asp-action="Index" class="btn btn-warning fw-bold">
+                            <i class="fa-solid fa-arrow-left"></i> Back to Admin Panel
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

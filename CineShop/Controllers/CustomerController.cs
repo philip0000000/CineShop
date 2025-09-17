@@ -17,6 +17,8 @@ namespace CineShop.Controllers
         /// <summary>
         /// show empty registration form
         /// </summary>
+        
+
         [HttpGet]
         public IActionResult Register()
         {

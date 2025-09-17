@@ -1,8 +1,10 @@
-﻿using CineShop.Models;
+﻿using AspNetCoreGeneratedDocument;
+using CineShop.Models;
 using CineShop.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Threading.Tasks;
 
 namespace CineShop.Controllers
@@ -11,10 +13,17 @@ namespace CineShop.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
+        private readonly ICustomerService _customers;
+        
 
-        public AdminController(IAdminService adminService)
+        public AdminController(IAdminService adminService, ICustomerService customers)
         {
             _adminService = adminService;
+            _customers = customers;
+            
+            
+
+
         }
 
        //Admin panel 
@@ -86,76 +95,132 @@ namespace CineShop.Controllers
         //Manage Customers
 
         //[Authorize]
+
+        //Shows list of customers
         public async Task<IActionResult> Customers()
         {
             var customers = await _adminService.GetAllCustomersAsync();
             return View(customers);
         }
 
-        //[Authorize]
+        //Filips code from Customer Controller
+        //Changed Name from Register() to AddCustomer()
+        //DONE
+        [HttpGet]
+        public IActionResult AddCustomer()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCustomer(Customer model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Check for duplicate email
+            if (!string.IsNullOrWhiteSpace(model.EmailAddress) &&
+                await _customers.EmailExistsAsync(model.EmailAddress))
+            {
+                ModelState.AddModelError(nameof(model.EmailAddress), "Email already exists.");
+                return View(model);
+            }
+
+            await _customers.CreateAsync(model);
+            TempData["Message"] = "Customer successfully created.";
+
+            // Added redirect to Admin/Customers after creation
+            return RedirectToAction("Customers", "Admin");
+        }
+
+
+        //Filips Code from Customer Controller changed name Edit() to EditCustomer()
+        /// <summary>
+        /// Displays the edit form for the specified customer.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> EditCustomer(int id)
+        {
+            var customer = await _customers.GetByIdAsync(id);
+            if (customer == null) return NotFound();
+            return View(customer);
+        }
+
+        /// <summary>
+        /// Updates the chosen customer using the form data.
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCustomer(int id, Customer model)
+        {
+            if (ModelState.IsValid == false)
+                return View(model);
+
+            // Try to update the customer. If it does not exist, show NotFound.
+            var result = await _customers.UpdateAsync(id, model);
+            if (result == false)
+                return NotFound();
+
+            TempData["Message"] = "Customer updated.";
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+
+        //DONE
+        /// <summary>
+        /// Show main info about the customer id.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> CustomerDetails(int id)
+        {
+            var customer = await _customers.GetByIdWithOrdersAsync(id);
+
+            if (customer == null)
+                return NotFound();
+
+            return View(customer);
+        }
+
+
+
+        //[Authorize] Change status to inactive instead for delete
+        
+        public async Task<IActionResult> DeleteCustomer(int id)
+        {
+            var customer = await _adminService.GetCustomerByIdAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
+
+       
+        [HttpPost, ActionName("DeleteCustomer")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteCustomerConfirmed(int id)
+        {
+            await _adminService.DeleteCustomerAsync(id);
+            TempData["Message"] = "Customer deleted successfully.";
+            return RedirectToAction(nameof(Customers));
+        }
+
+
+        // --- ORDERS OVERVIEW---
+
+        //[Authorize]
+        //Shows list of Orders
         public IActionResult Orders()///DONE
         {
             var orders = _adminService.GetAllOrdersAsync().Result;
             return View(orders);
         }
 
-
-
-        /// <summary>
-        /// ///////               TO DO/////////////////////////////////////////////
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-
-        //[Authorize]
-
-        public async Task<IActionResult> EditCustomer(int id)
-        {
-            var customer = await _adminService.GetCustomerByIdAsync(id);
-            if (customer == null) return NotFound();
-            return View(customer);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditCustomer(Customer customer)
-        {
-            if (!ModelState.IsValid) return View(customer);
-            await _adminService.UpdateCustomerAsync(customer);
-            return RedirectToAction(nameof(Customers));
-        }
-
-        //[Authorize]
-        public IActionResult AddCustomer() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> AddCustomer(Customer customer)
-        {
-            if (!ModelState.IsValid) return View(customer);
-            await _adminService.AddCustomerAsync(customer);
-            return RedirectToAction(nameof(Customers));
-        }
-
-        ////[Authorize] Change status to inactive instead for delete
-        //public async Task<IActionResult> DeleteCustomer(int id)
-        //{
-        //    await _adminService.DeleteCustomerAsync(id);
-        //    return RedirectToAction(nameof(Customers));
-        //}
-
-        // --- ORDERS OVERVIEW---
-
-       
-
-
-
-        /// <summary>
-        /// //TO DO// DATA is missed , i need some more seed data and randomly creaet ordesr
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //[Authorize]
-
+        //TO DO
         public async Task<IActionResult> OrderDetails(int id)
         {
             var order = await _adminService.GetOrderByIdAsync(id);
@@ -163,12 +228,12 @@ namespace CineShop.Controllers
             return View(order);
         }
 
-        //[Authorize]
+        ////[Authorize]
 
-        public async Task<IActionResult> DeleteOrder(int id)
-        {
-            await _adminService.DeleteOrderAsync(id);
-            return RedirectToAction(nameof(Orders));
-        }
+        //public async Task<IActionResult> DeleteOrder(int id)
+        //{
+        //    await _adminService.DeleteOrderAsync(id);
+        //    return RedirectToAction(nameof(Orders));
+        //}
     }
 }
