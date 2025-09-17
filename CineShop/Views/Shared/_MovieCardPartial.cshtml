@@ -2,7 +2,9 @@
 
 <div class="col-md-3">
     <div class="card bg-dark text-light border-warning shadow-sm h-100">
-        <img src="@Model.Image" alt="@Model.Title" class="card-img-top img-fluid border-bottom border-warning" style="max-height: 200px; object-fit: cover;" />
+        <img src="@Url.Content(Model.Image)" alt="@Model.Title poster"
+             class="card-img-top img-fluid border-bottom border-warning"
+             style="max-height: 200px; object-fit: cover;" />
 
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
@@ -12,7 +14,9 @@
                     <span class="text-muted">Director:</span> @Model.Director<br />
                     <span class="text-muted">Year:</span> @Model.ReleaseYear
                 </p>
-                <p class="fw-semibold text-success">Price: @Model.Price.ToString("C")</p>
+                <p class="fw-semibold text-success">
+                    Price: @Model.Price.ToString("C")
+                </p>
             </div>
             <div class="d-grid gap-2 mt-3">
                 <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-info btn-sm">

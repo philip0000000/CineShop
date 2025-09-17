@@ -1,47 +1,55 @@
 using CineShop.DataBase;
+using CineShop.Models;
 using CineShop.Services;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace CineShop
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container
             builder.Services.AddControllersWithViews();
 
-
-            // Sessions needed for cart
+            // Session support for cart functionality
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
-            builder.Services.AddHttpContextAccessor(); // Access HttpContext inside Cart Services
-            builder.Services.AddScoped<ICartService, CartService>(); // Register cart service for Dependency Injection
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<ICartService, CartService>();
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidCastException("Default Connection not found");
+            // Database connection
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Default Connection not found");
 
-            builder.Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<MovieDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
+            // Application services
             builder.Services.AddScoped<IStatisticsService, StatisticsService>();
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
-
             builder.Services.AddScoped<ICustomerService, CustomerService>();
-
-
 
             var app = builder.Build();
 
-           
+            // ?? Seed the database
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<MovieDbContext>();
 
-            // Configure the HTTP request pipeline.
+                // Apply migrations and seed data
+                context.Database.Migrate();
+                await SeedData.InitializeAsync(context);
+            }
+
+            // Configure the HTTP request pipeline
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -49,16 +57,15 @@ namespace CineShop
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseSession(); // enable session state (needed for cart)
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }
+

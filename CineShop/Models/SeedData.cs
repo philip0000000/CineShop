@@ -13,7 +13,9 @@ namespace CineShop.Models
 
                 var random = new Random();
 
-                // 👥 International Customers
+
+
+               
                     var customers = new List<Customer>
                     {
 
@@ -46,28 +48,30 @@ namespace CineShop.Models
 
 
                     };
+
+
             var movies = new List<Movie>
             {
-                new Movie { Title = "Inception", Genre = "Sci-Fi", Director = "Christopher Nolan", ReleaseYear = 2010, Price = 299.00m, Image = "https://example.com/posters/inception.jpg" },
-                new Movie { Title = "Parasite", Genre = "Thriller", Director = "Bong Joon-ho", ReleaseYear = 2019, Price = 249.00m, Image = "https://example.com/posters/parasite.jpg" },
-                new Movie { Title = "Amélie", Genre = "Romance", Director = "Jean-Pierre Jeunet", ReleaseYear = 2001, Price = 179.00m, Image = " " },
-                new Movie { Title = "Spirited Away", Genre = "Fantasy", Director = "Hayao Miyazaki", ReleaseYear = 2001, Price = 229.00m, Image = "https://example.com/posters/spiritedaway.jpg" },
-                new Movie { Title = "Roma", Genre = "Drama", Director = "Alfonso Cuarón", ReleaseYear = 2018, Price = 199.00m, Image = "https://example.com/posters/roma.jpg" },
-                new Movie { Title = "City of God", Genre = "Crime", Director = "Fernando Meirelles", ReleaseYear = 2002, Price = 189.00m, Image = "https://example.com/posters/cityofgod.jpg" },
-                new Movie { Title = "Pan's Labyrinth", Genre = "Fantasy", Director = "Guillermo del Toro", ReleaseYear = 2006, Price = 219.00m, Image = "https://example.com/posters/panslabyrinth.jpg" },
-                new Movie { Title = "The Lives of Others", Genre = "Drama", Director = "Florian Henckel von Donnersmarck", ReleaseYear = 2006, Price = 209.00m, Image = "https://example.com/posters/livesofothers.jpg" },
-                new Movie { Title = "Crouching Tiger, Hidden Dragon", Genre = "Action", Director = "Ang Lee", ReleaseYear = 2000, Price = 239.00m, Image = "https://example.com/posters/crouchingtiger.jpg" },
-                new Movie { Title = "The Intouchables", Genre = "Comedy", Director = "Olivier Nakache & Éric Toledano", ReleaseYear = 2011, Price = 189.00m, Image = "https://example.com/posters/intouchables.jpg" },
-                new Movie { Title = "Life Is Beautiful", Genre = "Drama", Director = "Roberto Benigni", ReleaseYear = 1997, Price = 199.00m, Image = "https://example.com/posters/lifeisbeautiful.jpg" },
-                new Movie { Title = "Oldboy", Genre = "Thriller", Director = "Park Chan-wook", ReleaseYear = 2003, Price = 219.00m, Image = "https://example.com/posters/oldboy.jpg" },
-                new Movie { Title = "The Secret in Their Eyes", Genre = "Mystery", Director = "Juan José Campanella", ReleaseYear = 2009, Price = 189.00m, Image = "https://example.com/posters/secretintheireyes.jpg" },
-                new Movie { Title = "Your Name", Genre = "Animation", Director = "Makoto Shinkai", ReleaseYear = 2016, Price = 229.00m, Image = "https://example.com/posters/yourname.jpg" },
-                new Movie { Title = "The Hunt", Genre = "Drama", Director = "Thomas Vinterberg", ReleaseYear = 2012, Price = 199.00m, Image = "https://example.com/posters/thehunt.jpg" },
-                new Movie { Title = "Incendies", Genre = "Mystery", Director = "Denis Villeneuve", ReleaseYear = 2010, Price = 209.00m, Image = "https://example.com/posters/incendies.jpg" },
-                new Movie { Title = "The Great Beauty", Genre = "Drama", Director = "Paolo Sorrentino", ReleaseYear = 2013, Price = 189.00m, Image = "https://example.com/posters/greatbeauty.jpg" },
-                new Movie { Title = "Train to Busan", Genre = "Horror", Director = "Yeon Sang-ho", ReleaseYear = 2016, Price = 219.00m, Image = "https://example.com/posters/train2busan.jpg" },
-                new Movie { Title = "Wadjda", Genre = "Drama", Director = "Haifaa al-Mansour", ReleaseYear = 2012, Price = 179.00m, Image = "https://example.com/posters/wadjda.jpg" },
-                new Movie { Title = "The Salesman", Genre = "Drama", Director = "Asghar Farhadi", ReleaseYear = 2016, Price = 199.00m, Image = "https://example.com/posters/salesman.jpg" }
+                new Movie { Title = "Inception", Genre = "Sci-Fi", Director = "Christopher Nolan", ReleaseYear = 2010, Price = 299.00m, Image = "/images/inception.jpg" },
+                new Movie { Title = "Parasite", Genre = "Thriller", Director = "Bong Joon-ho", ReleaseYear = 2019, Price = 249.00m, Image = "/images/parasite.jpg" },
+                new Movie { Title = "Amélie", Genre = "Romance", Director = "Jean-Pierre Jeunet", ReleaseYear = 2001, Price = 179.00m, Image = "/images/amelie.jpg" },
+                new Movie { Title = "Spirited Away", Genre = "Fantasy", Director = "Hayao Miyazaki", ReleaseYear = 2001, Price = 229.00m, Image = "/images/spirited.jpg" },
+                new Movie { Title = "Roma", Genre = "Drama", Director = "Alfonso Cuarón", ReleaseYear = 2018, Price = 199.00m, Image = "/images/roma.jpg" },
+                new Movie { Title = "City of God", Genre = "Crime", Director = "Fernando Meirelles", ReleaseYear = 2002, Price = 189.00m, Image = "/images/guds stad.jpg" },
+                new Movie { Title = "Pan's Labyrinth", Genre = "Fantasy", Director = "Guillermo del Toro", ReleaseYear = 2006, Price = 219.00m, Image = "/images/pan's lab.jpg" },
+                new Movie { Title = "The Lives of Others", Genre = "Drama", Director = "Florian Henckel von Donnersmarck", ReleaseYear = 2006, Price = 209.00m, Image = "/images/love of others.jpg" },
+                new Movie { Title = "Crouching Tiger, Hidden Dragon", Genre = "Action", Director = "Ang Lee", ReleaseYear = 2000, Price = 239.00m, Image = "/images/tiger.jpg" },
+                new Movie { Title = "The Intouchables", Genre = "Comedy", Director = "Olivier Nakache & Éric Toledano", ReleaseYear = 2011, Price = 189.00m, Image = "/images/the intouchables.jpg" },
+                new Movie { Title = "Life Is Beautiful", Genre = "Drama", Director = "Roberto Benigni", ReleaseYear = 1997, Price = 199.00m, Image = "/images/life is beautiful.jpg" },
+                new Movie { Title = "Oldboy", Genre = "Thriller", Director = "Park Chan-wook", ReleaseYear = 2003, Price = 219.00m, Image = "/images/oldboy.jpg" },
+                new Movie { Title = "The Secret in Their Eyes", Genre = "Mystery", Director = "Juan José Campanella", ReleaseYear = 2009, Price = 189.00m, Image = "/images/the secret.jpg" },
+                new Movie { Title = "Your Name", Genre = "Animation", Director = "Makoto Shinkai", ReleaseYear = 2016, Price = 229.00m, Image = "/images/your name.jpg" },
+                new Movie { Title = "The Hunt", Genre = "Drama", Director = "Thomas Vinterberg", ReleaseYear = 2012, Price = 199.00m, Image = "/images/the hunt.jpg" },
+                new Movie { Title = "Incendies", Genre = "Mystery", Director = "Denis Villeneuve", ReleaseYear = 2010, Price = 209.00m, Image = "/images/incendies.jpg" },
+                new Movie { Title = "The Great Beauty", Genre = "Drama", Director = "Paolo Sorrentino", ReleaseYear = 2013, Price = 189.00m, Image = "/images/the great beauty.jpg" },
+                new Movie { Title = "Train to Busan", Genre = "Horror", Director = "Yeon Sang-ho", ReleaseYear = 2016, Price = 219.00m, Image = "/images/train.jpg" },
+                new Movie { Title = "Wadjda", Genre = "Drama", Director = "Haifaa al-Mansour", ReleaseYear = 2012, Price = 179.00m, Image = "/images/wadjda.jpg" },
+                new Movie { Title = "The Salesman", Genre = "Drama", Director = "Asghar Farhadi", ReleaseYear = 2016, Price = 199.00m, Image = "/images/the salesman.jpg" }
             };
 
 
@@ -79,7 +83,7 @@ namespace CineShop.Models
                 await context.Movies.AddRangeAsync(movies);
                 await context.SaveChangesAsync();
 
-                // 🧾 Randomized Orders and OrderRows
+              
                 var orderRows = new List<OrderRow>();
 
                 foreach (var customer in customers)
