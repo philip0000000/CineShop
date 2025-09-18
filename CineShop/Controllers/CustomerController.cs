@@ -114,7 +114,12 @@ namespace CineShop.Controllers
         /// <summary>
         /// Show all orders for a customer by their email.
         /// </summary>
-        [HttpGet("Customer/Orders/{email}")]//TO DO
+
+        [HttpGet("Customer/Orders/{email}")]
+        // Note: Commented out because it conflicts with OrdersController.
+        // Both used the same route /customer/orders/{email}, which gave errors.
+        // Orders are now handled only in OrdersController for clear structure.
+        /*[HttpGet("Customer/Orders/{email}
         public async Task<IActionResult> Orders(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -123,7 +128,6 @@ namespace CineShop.Controllers
             var customer = await _customers.GetByEmailWithOrdersAsync(email);
             if (customer == null)
                 return NotFound();
-
             return View(customer);
         }
 
@@ -159,8 +163,7 @@ namespace CineShop.Controllers
         //    return RedirectToAction("Index", "Cart");
         //}
 
-
-
+        }*/
 
     }
 }
