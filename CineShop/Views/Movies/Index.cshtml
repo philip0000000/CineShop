@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CineShop.Models.Movie>
+﻿@* @model IEnumerable<CineShop.Models.Movie>
 
 @{
     ViewData["Title"] = "Browse Movies";
@@ -12,6 +12,65 @@
     <p class="lead text-light">
         Discover your next favorite film—from Nordic dramas to cozy thrillers.
     </p>
+</div>
+
+<div class="mt-4">
+    <a asp-action="AddMovie" class="btn btn-warning btn-lg fw-semibold me-2">
+        <i class="fa fa-plus-circle me-1"></i> Add New Movie
+    </a>
+    <a asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
+        <i class="fa fa-tools me-2"></i>
+        Back to Admin Panel
+    </a>
+
+
+</div>
+
+<div class="container py-4">
+    <div class="row g-4">
+        @foreach (var movie in Model)
+        {
+            @Html.Partial("_MovieCardPartial", movie)
+        }
+    </div>
+</div>
+ *@
+
+@model IEnumerable<CineShop.Models.Movie>
+
+@{
+    ViewData["Title"] = "Browse Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var role = Context.Session.GetString("UserRole") ?? "Customer";
+    var isAdmin = role == "Admin";
+}
+
+<div class="text-center my-5">
+    <h1 class="display-4 text-warning fw-bold">
+        <i class="fa fa-film me-2"></i> Browse Movies
+    </h1>
+    <p class="lead text-light">
+        Discover your next favorite film—from Nordic dramas to cozy thrillers.
+    </p>
+</div>
+
+<div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+    @if (isAdmin)
+    {
+        <a asp-controller="Admin" asp-action="AddMovie" class="btn btn-warning btn-lg fw-semibold">
+            <i class="fa fa-plus-circle me-1"></i> Add New Movie
+        </a>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-warning btn-lg fw-semibold">
+            <i class="fa fa-tools me-2"></i> Back to Admin Dashboard
+        </a>
+    }
+    else
+    {
+        <a asp-controller="Customer" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4 shadow-sm">
+            <i class="fa fa-user me-2"></i> Back to My Dashboard
+        </a>
+    }
 </div>
 
 <div class="container py-4">

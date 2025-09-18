@@ -1,0 +1,32 @@
+﻿@model CineShop.Models.Customer
+
+@{
+    ViewData["Title"] = "My Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-user me-2"></i> My Dashboard
+    </h1>
+    <p class="lead text-light text-center mb-5">
+        Welcome back to CineShop, your personal movie haven. What would you like to do today?
+    </p>
+
+    <div class="d-flex flex-column align-items-center gap-3">
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4 shadow-sm">
+            <i class="fa-solid fa-film me-2"></i> Browse Movies
+        </a>
+        <a asp-action="MyOrders" class="btn btn-warning btn-lg fw-bold px-4 shadow-sm">
+            <i class="fa-solid fa-cart-shopping"></i> Cart & Order
+        </a>                   
+        <a asp-controller="Customer" asp-action="Details" class="btn btn-warning btn-lg fw-bold px-4 shadow-sm">
+            <i class="fa-solid fa-eye"></i> View My Profile
+        </a>
+
+        @* <a asp-controller="Customer" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-warning btn-lg fw-bold px-4 shadow-sm">
+            <i class="fa-solid fa-eye"></i> View My Profile
+        </a> *@
+
+    </div>
+</div>
