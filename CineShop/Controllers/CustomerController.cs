@@ -8,51 +8,77 @@ namespace CineShop.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customers;
+        private readonly IMovieService _movieService;
 
-        public CustomerController(ICustomerService customers)
+        public CustomerController(ICustomerService customers, IMovieService movieService)
         {
             _customers = customers;
+            _movieService = movieService;
         }
 
-        /// <summary>
-        /// show empty registration form
-        /// </summary>
-        
-
-        [HttpGet]
-        public IActionResult Register()
+        //Customer panel 
+        //Added to be able to create link to customer's actions
+        public IActionResult Index() //DAShboard DONE
         {
             return View();
         }
 
+        /////Update my Info
+
         /// <summary>
-        /// handle registration post
+        /// show empty registration form
         /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(Customer model)
+
+        // OBS! MOVED TO LOGIN/REGISTER
+        //[HttpGet]
+        //public IActionResult Register()//CREATE PATH
+        //{
+        //    return View();
+        //}
+
+        ///// <summary>
+        ///// handle registration post
+        ///// </summary>
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Register(Customer model)
+        //{
+        //    if (ModelState.IsValid == false)
+        //        return View(model);
+
+        //    // simple duplicate check by email
+        //    if (!string.IsNullOrWhiteSpace(model.EmailAddress) &&
+        //        await _customers.EmailExistsAsync(model.EmailAddress))
+        //    {
+        //        ModelState.AddModelError(nameof(model.EmailAddress), "Email already exists.");
+        //        return View(model);
+        //    }
+
+        //    var id = await _customers.CreateAsync(model);
+        //    TempData["Message"] = "Customer created.";
+        //    return RedirectToAction(nameof(Details), new { id });
+        //}
+
+        /// <summary>
+        /// Show main info about the customer id.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)//TO DO
         {
-            if (ModelState.IsValid == false)
-                return View(model);
-
-            // simple duplicate check by email
-            if (!string.IsNullOrWhiteSpace(model.EmailAddress) &&
-                await _customers.EmailExistsAsync(model.EmailAddress))
-            {
-                ModelState.AddModelError(nameof(model.EmailAddress), "Email already exists.");
-                return View(model);
-            }
-
-            var id = await _customers.CreateAsync(model);
-            TempData["Message"] = "Customer created.";
-            return RedirectToAction(nameof(Details), new { id });
+            
+            var customer = await _customers.GetByIdWithOrdersAsync(id);
+            if (customer == null)
+                return NotFound();
+            return View(customer);
         }
+
 
         /// <summary>
         /// Displays the edit form for the specified customer.
         /// </summary>
+        /// 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)//TO DO
         {
             var customer = await _customers.GetByIdAsync(id);
             if (customer == null) return NotFound();
@@ -78,24 +104,17 @@ namespace CineShop.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
-        /// <summary>
-        /// Show main info about the customer id.
-        /// </summary>
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> BrowseMovies()//DONE
         {
-            var customer = await _customers.GetByIdWithOrdersAsync(id);
-
-            if (customer == null)
-                return NotFound();
-
-            return View(customer);
+            var movies = await _movieService.GetAllAsync();
+            return View(movies);
         }
 
+        //CART AND ORDER
         /// <summary>
         /// Show all orders for a customer by their email.
         /// </summary>
-        [HttpGet("Customer/Orders/{email}")]
+        [HttpGet("Customer/Orders/{email}")]//TO DO
         public async Task<IActionResult> Orders(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -107,5 +126,41 @@ namespace CineShop.Controllers
 
             return View(customer);
         }
+
+        //TO DO
+        //public async Task<IActionResult> OrderDetails(int id)
+        //{
+        //    var order = await _adminService.GetOrderByIdAsync(id);
+        //    if (order == null) return NotFound();
+        //    return View(order);
+        //}
+
+        //TO DO
+        // Testa if we can use carts actions
+
+        //public IActionResult Index()
+        //{
+        //    var items = _cart.GetItems();
+        //    ViewBag.Total = _cart.GetTotal();
+        //    return View(items);
+        //}
+
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public IActionResult Add(int movieId)
+        //{
+        //    _cart.Add(movieId);
+        //    return RedirectToAction("Index", "Cart");
+        //}
+
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public IActionResult Remove(int movieId)
+        //{
+        //    _cart.Remove(movieId);
+        //    return RedirectToAction("Index", "Cart");
+        //}
+
+
+
+
     }
 }

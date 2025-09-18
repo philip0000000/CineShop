@@ -21,15 +21,18 @@ namespace CineShop.Controllers
             _adminService = adminService;
             _customers = customers;
             
-            
-
-
         }
 
        //Admin panel 
-        public IActionResult Index()//Add validation to access adminapnel
-        {
+        //public IActionResult Index()//Add validation to access adminapnel
+        //{
             
+        //    return View();
+        //}
+        public IActionResult Index()
+        {
+            var role = HttpContext.Session.GetString("UserRole"); // ✅ Works here
+                                                                  // Use role logic...
             return View();
         }
 
