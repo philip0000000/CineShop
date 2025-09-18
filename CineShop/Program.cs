@@ -32,6 +32,7 @@ namespace CineShop
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
 
             var app = builder.Build();
 
