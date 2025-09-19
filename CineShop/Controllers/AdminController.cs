@@ -23,12 +23,8 @@ namespace CineShop.Controllers
             
         }
 
-       //Admin panel 
-        //public IActionResult Index()//Add validation to access adminapnel
-        //{
-            
-        //    return View();
-        //}
+       //Admin Dashboard
+
         public IActionResult Index()
         {
             var role = HttpContext.Session.GetString("UserRole");
