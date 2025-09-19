@@ -1,5 +1,5 @@
 ﻿using CineShop.DataBase;
-using CineShop.Models;
+using CineShop.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
