@@ -11,7 +11,7 @@
         <i class="fa fa-search me-2"></i> Search for a Movie
     </h1>
     <p class="lead text-light text-center mb-4">
-        Enter a movie title to explore your CineShop collection.
+        Find your next favorite film—from Nordic dramas to cozy thrillers.
     </p>
 
     <!-- Search Form -->
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <!-- Message Only -->
+    <!-- Message -->
     @if (ViewBag.ShowResults == false && ViewBag.Message != null)
     {
         <div class="alert alert-info text-center fw-bold mb-4">
@@ -54,14 +54,14 @@
         </div>
     }
 
-    <!-- Results Only -->
+    <!-- Results -->
     @if (ViewBag.ShowResults == true && Model != null && Model.Any())
     {
         <h2 class="text-light text-center mb-4">Search Results</h2>
         <div class="row g-4">
             @foreach (var movie in Model)
             {
-                @Html.Partial("_MovieCard", movie)
+                @Html.Partial("_MovieCardPartial", movie)
             }
         </div>
     }

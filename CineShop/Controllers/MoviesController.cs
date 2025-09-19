@@ -34,30 +34,53 @@ namespace CineShop.Controllers
             return View(movie);
         }
 
+        public IActionResult Search()
+        {
+            return View(); 
+        }
+
         [HttpGet]
         public IActionResult ShowSearchForm()
         {
-            return View();
+            return View("Search"); // Renders Views/Movies/Search.cshtml
         }
 
         [HttpPost]
         public async Task<IActionResult> ShowSearchResult(string searchPhrase)
         {
+            ViewBag.SearchPhrase = searchPhrase;
+
             if (string.IsNullOrWhiteSpace(searchPhrase))
-                return View("Index", new List<Movie>());
+            {
+                ViewBag.Message = "Please enter a movie title.";
+                ViewBag.ShowResults = false;
+                return View("Search");
+            }
 
             var results = await _movieService.SearchAsync(searchPhrase);
-            return View("Index", results);
+
+            if (results == null || !results.Any())
+            {
+                ViewBag.Message = $"Movie not found for \"{searchPhrase}\".";
+                ViewBag.ShowResults = false;
+                return View("Search");
+            }
+
+            ViewBag.ShowResults = true;
+            return View("Search", results);
         }
 
-        //[Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Add(int movieId)
-        {
-            _cartService.Add(movieId);
-            TempData["Message"] = "Movie added to cart!";
-            return RedirectToAction("Index", "Cart");
-        }
+        //    //[Authorize]
+        //    [HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Add(int movieId)
+        //{
+        //    _cartService.Add(movieId);
+        //    TempData["Message"] = "Movie added to cart!";
+        //    return RedirectToAction("Index", "Cart");
+        //}
+
+
     }
+
 }
