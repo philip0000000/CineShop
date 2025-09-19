@@ -24,7 +24,7 @@ namespace CineShop.Controllers
         /// </summary>
         // GET /orders/customer/{email}
         [HttpGet("customer/{email}")]
-        public async Task<IActionResult> CustomerOrders(string email)
+        public async Task<IActionResult> CustomerOrders(string email) //Filips kod
         {
             if (string.IsNullOrWhiteSpace(email))
                 return NotFound();
@@ -41,6 +41,7 @@ namespace CineShop.Controllers
         /// <summary>
         /// Admin view: all orders, newest first.
         /// </summary>
+        /// Handled in AdminController Earlier as Admin/Orders
         // GET /orders/admin
         [HttpGet("admin")]
         public async Task<IActionResult> AdminOrders()

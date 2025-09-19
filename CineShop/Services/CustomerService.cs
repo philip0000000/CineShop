@@ -68,6 +68,8 @@ namespace CineShop.Services
             return customer;
         }
 
+       
+
         public async Task<bool> UpdateAsync(int id, Customer updated)
         {
             // Find customer id in database
