@@ -1,7 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CineShop.ViewModels.CartCheckoutViewModel
 @{
+    ViewData["Title"] = "Checkout";
 }
 
-TODO
+<h2>Checkout</h2>
+
+<div class="row">
+    <!-- Existing customer: email only -->
+    <div class="col-md-6">
+        <h4>Existing customer</h4>
+        <p>Enter your email.</p>
+
+        <form method="post" action="@Url.Action("Create","Orders")" novalidate>
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" }) <!-- show server errors -->
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <!-- must match Customer.EmailAddress -->
+                <input name="EmailAddress" type="email" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Place order</button>
+        </form>
+    </div>
+
+    <!-- New customer: all fields -->
+    <div class="col-md-6">
+        <h4>New customer</h4>
+        <p>Fill all fields.</p>
+
+        <form method="post" action="@Url.Action("Create","Orders")" novalidate>
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">First name</label>
+                    <input name="Firstname" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Last name</label>
+                    <input name="Lastname" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="mb-2 fw-bold">Billing</div>
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input name="BillingAddress" class="form-control" required />
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Zip</label>
+                    <input name="BillingZip" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">City</label>
+                    <input name="BillingCity" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="mb-2 fw-bold">Delivery</div>
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input name="DeliveryAddress" class="form-control" required />
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Zip</label>
+                    <input name="DeliveryZip" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">City</label>
+                    <input name="DeliveryCity" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+                    <!-- must match Customer.EmailAddress -->
+                    <input name="EmailAddress" type="email" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Phone</label>
+                    <input name="PhoneNo" class="form-control" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Place order</button>
+        </form>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Cart")">Back to cart</a>
+</div>

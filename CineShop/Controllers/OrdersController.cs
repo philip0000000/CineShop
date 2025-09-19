@@ -56,7 +56,7 @@ namespace CineShop.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PlaceOrder(Customer input)
+        public async Task<IActionResult> Create(Customer input)
         {
             if (input == null)
                 return BadRequest();
@@ -76,7 +76,8 @@ namespace CineShop.Controllers
                 await _customers.EmailExistsAsync(input.EmailAddress))
             {
                 var existing = await _customers.GetByEmailWithOrdersAsync(input.EmailAddress);
-                if (existing == null) return NotFound();
+                if (existing == null)
+                    return NotFound();
                 customerId = existing.Id;
             }
             else
