@@ -9,48 +9,48 @@
     var isAdmin = role == "Admin";
 
 }
-
-<div class="container py-5">
-    <h1 class="text-warning text-center fw-bold mb-4">
+<div class="container py-4">
+    <!-- Header -->
+    <h1 class="text-warning text-center fw-bold mb-3">
         <i class="fa fa-film me-2"></i> @Model.Title
     </h1>
-    <p class="lead text-light text-center mb-4">
-        Dive into the details of this cinematic gem—from genre and director to pricing and release year.
-    </p>
 
-    <div class="card bg-dark text-light border-warning shadow-sm mb-4">
-        <div class="card-body">
-            <dl class="row mb-0">
-                <dt class="col-sm-3 text-warning">Title</dt>
-                <dd class="col-sm-9">@Model.Title</dd>
+    <!-- Compact Layout: Poster + Details Side by Side -->
+    <div class="row justify-content-center align-items-center g-4">
+        <!-- Poster with Zoom Effect -->
+        <div class="col-md-5 text-center">
+            @if (!string.IsNullOrWhiteSpace(Model.Image))
+            {
+                <img src="@Model.Image" alt="@Model.Title poster"
+                     class="img-fluid movie-poster border border-warning shadow"
+                     style="max-height: 400px; object-fit: cover;" />
+            }
+            else
+            {
+                <span class="text-muted">No image available</span>
+            }
+        </div>
 
-                <dt class="col-sm-3 text-warning">Genre</dt>
-                <dd class="col-sm-9">@Model.Genre</dd>
+        <!-- Movie Info -->
+        <div class="col-md-5">
+            <ul class="list-unstyled fs-5 text-light">
+                <li><span class="text-muted">Genre:</span> @Model.Genre</li>
+                <li><span class="text-muted">Director:</span> @Model.Director</li>
+                <li><span class="text-muted">Release Year:</span> @Model.ReleaseYear</li>
+                <li><span class="text-muted">Price:</span> <span class="text-success fw-semibold">@Model.Price.ToString("C")</span></li>
+            </ul>
 
-                <dt class="col-sm-3 text-warning">Director</dt>
-                <dd class="col-sm-9">@Model.Director</dd>
+            <!-- Action Buttons -->
+            <div class="d-flex gap-3 mt-4">
+                <a asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="fa fa-cart-plus me-1"></i> Add to Cart
+                </a>
 
-                <dt class="col-sm-3 text-warning">Release Year</dt>
-                <dd class="col-sm-9">@Model.ReleaseYear</dd>
-
-                <dt class="col-sm-3 text-warning">Price</dt>
-                <dd class="col-sm-9 text-success fw-semibold">@Model.Price.ToString("C")</dd>
-
-                <dt class="col-sm-3 text-warning">Poster</dt>
-                <dd class="col-sm-9">
-                    @if (!string.IsNullOrWhiteSpace(Model.Image))
-                    {
-                        <img src="@Model.Image" alt="Movie Poster" class="img-thumbnail" style="max-height: 200px;" />
-                    }
-                    else
-                    {
-                        <span class="text-muted">No image available</span>
-                    }
-                </dd>
-            </dl>
+            </div>
         </div>
     </div>
-
+</div>
     <div class="d-flex justify-content-center gap-3">
         @if (isAdmin)
         {
