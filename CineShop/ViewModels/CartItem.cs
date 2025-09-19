@@ -1,4 +1,4 @@
-﻿namespace CineShop.Models
+﻿namespace CineShop.ViewModels
 {
     /// <summary>
     /// Item stored in the users cart (kept in session)

@@ -1,27 +1,66 @@
-﻿@model IEnumerable<CineShop.Models.CartItem>
+﻿@model IEnumerable<CineShop.ViewModels.CartItem>
+
+@{
+    ViewData["Title"] = "Cart";
+    var hasItems = Model != null && Model.Any();
+}
 
 <h2>Your Cart</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (!hasItems)
+{
+    <p>Your cart is empty.</p>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Movies")">Back to movies</a>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
             <tr>
-                <td>@item.Title</td>
-                <td>@item.Price</td>
-                <td>@item.Quantity</td>
-                <td>@(item.Price* item.Quantity)</td>
+                <th style="width:40%">Title</th>
+                <th style="width:15%">Price</th>
+                <th style="width:15%">Qty</th>
+                <th style="width:15%">Line total</th>
+                <th style="width:15%"></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Price.ToString("0.00")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Price* item.Quantity).ToString("0.00")</td>
+                    <td class="text-nowrap">
+                        <!-- +1 -->
+                        <form asp-action="Add" asp-controller="Cart" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@item.MovieId" />
+                            <button type="submit" class="btn btn-sm btn-success">Add</button>
+                        </form>
 
-<p><strong>Total:</strong> @ViewBag.Total</p>
+                        <!-- -1 (remove one, remove row at 0) -->
+                        <form asp-action="Remove" asp-controller="Cart" method="post" class="d-inline ms-1">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@item.MovieId" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total</strong></td>
+                <td><strong>@((decimal)ViewBag.Total).ToString("0.00")</strong></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-secondary" href="@Url.Action("Index", "Movies")">Continue shopping</a>
+        <a class="btn btn-primary" href="@Url.Action("Checkout", "Cart")">Checkout</a>
+    </div>
+}

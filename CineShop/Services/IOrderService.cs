@@ -1,4 +1,5 @@
 ﻿using CineShop.Models;
+using CineShop.ViewModels;
 
 namespace CineShop.Services
 {

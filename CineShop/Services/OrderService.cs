@@ -1,5 +1,6 @@
 ﻿using CineShop.DataBase;
 using CineShop.Models;
+using CineShop.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CineShop.Services

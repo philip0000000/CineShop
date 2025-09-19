@@ -19,12 +19,20 @@
                 </p>
             </div>
             <div class="d-grid gap-2 mt-3">
-                <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-info btn-sm">
+                <!-- Details link -->
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id"
+                   class="btn btn-outline-info btn-sm">
                     <i class="fa fa-info-circle me-1"></i> Details
                 </a>
-                <a asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-success btn-sm">
-                    <i class="fa fa-cart-plus me-1"></i> Add to Cart
-                </a>
+
+                <!-- Add to cart POST form -->
+                <form asp-controller="Cart" asp-action="Add" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="movieId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-outline-success btn-sm">
+                        <i class="fa fa-cart-plus me-1"></i> Add to Cart
+                    </button>
+                </form>
             </div>
         </div>
 
