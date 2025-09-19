@@ -1,0 +1,156 @@
+﻿@model CineShop.ViewModels.HomeStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 text-warning fw-bold">
+            <i class="fa fa-chart-bar me-2"></i> CineShop Admin Insights
+        </h1>
+        <p class="text-light fs-5">
+            Monitor trends, track performance, and celebrate your top customers.
+        </p>
+        <div class="mt-4">
+            <a asp-controller="Admin" asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
+                <i class="fa fa-tools me-2"></i>
+                Back to Admin Dashboard
+            </a>
+        </div>
+    </div>
+
+   
+    <!-- Statistics Grid -->
+    <div class="row g-4 mb-5">
+        <!-- Most Popular -->
+        <div class="col-md-3">
+            <div class="card bg-dark border-warning h-100 shadow-sm">
+                <div class="card-header text-warning fw-semibold">
+                    <i class="fa fa-fire me-2"></i> Most Popular
+                </div>
+                <div class="card-body p-2">
+                    @if (Model.MostPopularMovies?.Any() == true)
+                    {
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var movie in Model.MostPopularMovies)
+                            {
+                                <li class="text-light small mb-2">
+                                    <strong>@movie.Title</strong> — @movie.Price.ToString("C")
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted small">No popularity data available.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Newest Releases -->
+        <div class="col-md-3">
+            <div class="card bg-dark border-info h-100 shadow-sm">
+                <div class="card-header text-info fw-semibold">
+                    <i class="fa fa-calendar-plus me-2"></i> Newest Releases
+                </div>
+                <div class="card-body p-2">
+                    @if (Model.NewestMovies?.Any() == true)
+                    {
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var movie in Model.NewestMovies)
+                            {
+                                <li class="text-light small mb-2">
+                                    <strong>@movie.Title</strong> (@movie.ReleaseYear)
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted small">No recent movies found.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Oldest Titles -->
+        <div class="col-md-3">
+            <div class="card bg-dark border-secondary h-100 shadow-sm">
+                <div class="card-header text-secondary fw-semibold">
+                    <i class="fa fa-hourglass-start me-2"></i> Oldest Titles
+                </div>
+                <div class="card-body p-2">
+                    @if (Model.OldestMovies?.Any() == true)
+                    {
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var movie in Model.OldestMovies)
+                            {
+                                <li class="text-light small mb-2">
+                                    <strong>@movie.Title</strong> (@movie.ReleaseYear)
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted small">No archival titles available.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Cheapest Picks -->
+        <div class="col-md-3">
+            <div class="card bg-dark border-success h-100 shadow-sm">
+                <div class="card-header text-success fw-semibold">
+                    <i class="fa fa-coins me-2"></i> Cheapest Picks
+                </div>
+                <div class="card-body p-2">
+                    @if (Model.CheapestMovies?.Any() == true)
+                    {
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var movie in Model.CheapestMovies)
+                            {
+                                <li class="text-light small mb-2">
+                                    <strong>@movie.Title</strong> — @movie.Price.ToString("C")
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted small">No pricing data available.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Customer -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="card bg-dark border-warning shadow-sm">
+                <div class="card-header text-warning fw-semibold">
+                    <i class="fa fa-crown me-2"></i> Top Customer
+                </div>
+                <div class="card-body">
+                    @if (Model.TopSpendingCustomer != null)
+                    {
+                        <p class="text-light mb-2">
+                            <strong>@Model.TopSpendingCustomer.EmailAddress</strong> has spent the most on movie purchases.
+                        </p>
+                        <p class="text-muted small">Thank you for being our most loyal movie enthusiast!</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No top spender data available yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

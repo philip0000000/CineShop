@@ -20,13 +20,7 @@ namespace CineShop.Controllers
             {
                 var model = new HomeStatisticsViewModel
                 {
-                    MostPopularMovies = _statisticsService.GetFiveMostPopularMovies(5),
-                    NewestMovies = _statisticsService.GetFiveNewestMovies(5),
-                    OldestMovies = _statisticsService.GetFiveOldestMovies(5),
-
-                    CheapestMovies = _statisticsService.GetFiveCheapestMovies(5),
-                    TopSpendingCustomer = _statisticsService.GetTopCustomerByTotalSpend()
-                    // Add other properties as needed
+                    MostPopularMovies = _statisticsService.GetFiveMostPopularMovies(5),                    
                 };
 
                 return View(model);

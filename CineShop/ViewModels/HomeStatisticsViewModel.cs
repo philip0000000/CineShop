@@ -21,5 +21,7 @@ namespace CineShop.ViewModels
 
         // Customer insights
         public Customer TopSpendingCustomer { get; set; }
+
+        public List<MovieOrderStatViewModel> TopPurchasedMovies { get; set; }
     }
 }

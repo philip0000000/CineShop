@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CineShop.Models;
 using CineShop.Services;
-using CineShop.Models;
+using CineShop.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CineShop.Controllers
 {
@@ -13,7 +14,21 @@ namespace CineShop.Controllers
             _statisticsService = statisticsService;
         }
 
-       
+        public IActionResult Index()
+        {
+            var model = new HomeStatisticsViewModel
+            {
+                MostPopularMovies = _statisticsService.GetFiveMostPopularMovies(5),
+                NewestMovies = _statisticsService.GetFiveNewestMovies(5),
+                OldestMovies = _statisticsService.GetFiveOldestMovies(5),
+                CheapestMovies = _statisticsService.GetFiveCheapestMovies(5),
+                TopSpendingCustomer = _statisticsService.GetTopCustomerByTotalSpend()
+                
+            };
+            return View(model);
+        }
+
+
         public IActionResult MostPopular()
         {
             var movies = _statisticsService.GetFiveMostPopularMovies(5);
