@@ -1,0 +1,53 @@
+﻿@model CineShop.Models.Order
+@using System.Linq;
+
+<div class="card mb-4 shadow-sm border-warning">
+    <div class="card-header bg-dark text-warning fw-bold">
+        Order #@Model.Id - @Model.OrderDate.ToShortDateString()
+    </div>
+
+    <div class="card-body bg-dark text-light">
+        @{
+            // group rows by movie (title + id), assume same unit price per movie
+            var grouped = Model.OrderRows
+            .GroupBy(r => new { r.MovieId, Title = r.Movie?.Title ?? "(unknown)", UnitPrice = r.Price })
+            .Select(g => new
+            {
+                g.Key.Title,
+                UnitPrice = g.Key.UnitPrice,
+                Qty = g.Count(),
+                LineTotal = g.Sum(x => x.Price)
+            })
+            .OrderBy(x => x.Title)
+            .ToList();
+
+            var orderTotal = grouped.Sum(x => x.LineTotal);
+        }
+
+        <table class="table table-sm table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Movie</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Line Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in grouped)
+                {
+                    <tr>
+                        <td>@row.Title</td>
+                        <td>@row.UnitPrice.ToString("C")</td>
+                        <td>@row.Qty</td>
+                        <td>@row.LineTotal.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <p class="fw-bold text-end">
+            Total: @orderTotal.ToString("C")
+        </p>
+    </div>
+</div>
