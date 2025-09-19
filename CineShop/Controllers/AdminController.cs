@@ -31,8 +31,8 @@ namespace CineShop.Controllers
         //}
         public IActionResult Index()
         {
-            var role = HttpContext.Session.GetString("UserRole"); // ✅ Works here
-                                                                  // Use role logic...
+            var role = HttpContext.Session.GetString("UserRole");
+                                                                  
             return View();
         }
 
