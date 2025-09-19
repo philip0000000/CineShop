@@ -16,14 +16,13 @@ namespace CineShop.Controllers
             _movieService = movieService;
         }
 
-        //Customer panel 
+        //Customer Dashboard
         //Added to be able to create link to customer's actions
-        public IActionResult Index() //DAShboard DONE
+        public IActionResult Index() //DONE
         {
             return View();
         }
 
-        /////Update my Info
 
         /// <summary>
         /// show empty registration form
@@ -59,26 +58,26 @@ namespace CineShop.Controllers
         //    return RedirectToAction(nameof(Details), new { id });
         //}
 
+
+        /////My Progile (We can just create button but the action is not requierd in this task)
         /// <summary>
         /// Show main info about the customer id.
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Details(int id)//TO DO
+        public async Task<IActionResult> Details(int id)//N/A
         {
-            
             var customer = await _customers.GetByIdWithOrdersAsync(id);
             if (customer == null)
                 return NotFound();
             return View(customer);
         }
 
-
         /// <summary>
         /// Displays the edit form for the specified customer.
         /// </summary>
         /// 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)//TO DO
+        public async Task<IActionResult> Edit(int id)//N/A
         {
             var customer = await _customers.GetByIdAsync(id);
             if (customer == null) return NotFound();
@@ -104,7 +103,8 @@ namespace CineShop.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
-        public async Task<IActionResult> BrowseMovies()//DONE
+        //The same as Movies/Index, created role based view
+        public async Task<IActionResult> BrowseMovies()
         {
             var movies = await _movieService.GetAllAsync();
             return View(movies);
@@ -115,7 +115,7 @@ namespace CineShop.Controllers
         /// Show all orders for a customer by their email.
         /// </summary>
 
-        [HttpGet("Customer/Orders/{email}")]
+        //[HttpGet("Customer/Orders/{email}")]
         // Note: Commented out because it conflicts with OrdersController.
         // Both used the same route /customer/orders/{email}, which gave errors.
         // Orders are now handled only in OrdersController for clear structure.
@@ -166,4 +166,6 @@ namespace CineShop.Controllers
         }*/
 
     }
+
+    
 }

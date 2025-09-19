@@ -1,0 +1,26 @@
+﻿@model CineShop.Models.Order
+
+<div class="card bg-dark text-light border-warning mb-4 shadow-sm">
+    <div class="card-body">
+        <h5 class="text-warning fw-bold">
+            Order #@Model.Id — @Model.OrderDate.ToShortDateString()
+        </h5>
+
+        <ul class="list-group list-group-flush mt-3">
+            @foreach (var row in Model.OrderRows)
+            {
+                <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                    <span>@row.Movie.Title (@row.Movie.Price kr)</span>
+                    <span class="fw-bold">@row.Movie.Price.ToString("0.00") kr</span>
+                </li>
+            }
+        </ul>
+
+        <div class="mt-3 text-end">
+            <strong>Total:</strong>
+            <span class="text-warning fw-bold">
+                @Model.OrderRows.Sum(r => r.Movie.Price).ToString("0.00") kr
+            </span>
+        </div>
+    </div>
+</div>
