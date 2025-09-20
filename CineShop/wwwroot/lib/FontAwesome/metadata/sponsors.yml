@@ -121,11 +121,11 @@ büromöbel-experte-gmb-h &co-kg:
     - buromobelexperte
   label: Büromöbel-Experte GmbH & Co. KG.
   url: 'https://www.bueromoebel-experte.de'
-c-panel:
+c-Dashboard:
   icons:
-    - cpanel
-  label: cPanel
-  url: 'http://cpanel.com'
+    - cDashboard
+  label: cDashboard
+  url: 'http://cDashboard.com'
 cab-md:
   icons:
     - trillium
@@ -143,7 +143,7 @@ cibltd:
   url: 'http://www.cibltd.com'
 clear-blue-technologies:
   icons:
-    - solar-panel
+    - solar-Dashboard
   label: Clear Blue Technologies
   url: 'http://www.clearbluetechnologies.com'
 clicdata:
@@ -1389,8 +1389,8 @@ uptick:
     - hose-reel
     - light-emergency
     - light-emergency-on
-    - panel-ews
-    - panel-fire
+    - Dashboard-ews
+    - Dashboard-fire
     - person-to-door
     - phone-intercom
     - pipe-circle-check

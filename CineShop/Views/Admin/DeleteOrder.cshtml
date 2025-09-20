@@ -1,0 +1,52 @@
+﻿@model CineShop.Models.Order
+
+@{
+    ViewData["Title"] = "Delete Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="text-warning text-center fw-bold mb-4">
+        <i class="fa fa-trash-alt me-2"></i> Delete Order
+    </h1>
+    <p class="lead text-light text-center mb-4">
+        You're about to delete order <strong>#@Model.Id</strong>. This action cannot be undone.
+    </p>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-dark table-bordered border-warning rounded overflow-hidden">
+            <thead class="table-warning text-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total Items</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="align-middle">
+                    <td class="text-light">@Model.Id</td>
+                    <td class="text-light">@(Model.Customer?.EmailAddress ?? "Unknown")</td>
+                    <td class="text-light">@Model.OrderDate.ToShortDateString()</td>
+                    <td class="text-light">@((Model.OrderRows?.Count()) ?? 0)</td>
+                    <td class="text-success fw-semibold">
+                        @(Model.OrderRows?.Sum(row => row.Price).ToString("C") ?? "0")
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form asp-action="DeleteOrder" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-danger btn-lg">
+                <i class="fa fa-trash me-1"></i> Confirm Delete
+            </button>
+            <a asp-action="Orders" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
+                <i class="fa-solid fa-xmark"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>

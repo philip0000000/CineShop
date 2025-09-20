@@ -15,7 +15,7 @@
 
     <div class="text-center mb-4">
        <a asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
-          <i class="fa fa-tools me-2"></i>Back to Admin Panel
+          <i class="fa fa-tools me-2"></i>Back to Admin Dashboard
        </a>
      
     </div>
@@ -42,7 +42,7 @@
                         <td class="text-light">@order.Id</td>
                         <td class="text-light">@customerEmail</td>
                         <td class="text-light">@order.OrderDate.ToShortDateString()</td>
-                        <td class="text-light">@order.OrderRows?.Count() ?? 0</td>
+                        <td class="text-light">@((order.OrderRows?.Count()) ?? 0)</td>
                         <td class="text-success fw-semibold">@totalPrice.ToString("C")</td>
                         <td class="text-center">
                             <a asp-action="EditOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-warning me-2" title="Edit Order">

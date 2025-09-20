@@ -8,7 +8,7 @@
         <i class="fa fa-tools me-2"></i> Admin Dashboard
     </h1>
     <p class="lead text-light text-center mb-5">
-        Welcome back, curator. Choose a panel to manage your CineShop empire.
+        Welcome back, curator. Choose a Dashboard to manage your CineShop empire.
     </p>
 
     <div class="d-flex flex-column align-items-center gap-3">
@@ -22,6 +22,11 @@
         <a asp-action="Orders" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
             <i class="fa-solid fa-eye"></i> View Orders
         </a>
+        @* <a asp-controller="Orders" asp-action="AdminOrders" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
+            <i class="fa-solid fa-eye"></i> View Orders
+        </a> *@
+
+
         <a asp-controller="Statistics" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
             <i class="fa-solid fa-chart-simple"></i> View Statisctics
         </a>

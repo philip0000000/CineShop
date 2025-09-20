@@ -14636,7 +14636,7 @@ cow:
       - moo
   unicode: f6c8
   voted: false
-cpanel:
+cDashboard:
   changes:
     - 5.0.0
     - 7.0.0
@@ -14647,7 +14647,7 @@ cpanel:
     pro:
       - family: classic
         style: brands
-  label: Cpanel
+  label: CDashboard
   search:
     terms: []
   unicode: f388
@@ -46721,7 +46721,7 @@ socks:
       - wednesday
   unicode: f696
   voted: false
-solar-panel:
+solar-Dashboard:
   aliases:
     unicodes:
       secondary:
@@ -46743,7 +46743,7 @@ solar-panel:
     pro:
       - family: classic
         style: solid
-  label: Solar Panel
+  label: Solar Dashboard
   search:
     terms:
       - clean

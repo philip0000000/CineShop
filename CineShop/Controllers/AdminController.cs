@@ -227,12 +227,57 @@ namespace CineShop.Controllers
             return View(order);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditOrder(int id)
+        {
+            var order = await _adminService.GetOrderByIdAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditOrder(Order order)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(order);
+            }
+
+            await _adminService.UpdateOrderAsync(order);
+            TempData["Message"] = "Order updated successfully.";
+            return RedirectToAction(nameof(OrderDetails), new { id = order.Id });
+        }
+
+
+
+
         ////[Authorize]
 
-        //public async Task<IActionResult> DeleteOrder(int id)
-        //{
-        //    await _adminService.DeleteOrderAsync(id);
-        //    return RedirectToAction(nameof(Orders));
-        //}
+        // GET: Confirm Delete
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            var order = await _adminService.GetOrderByIdAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order); // Shows confirmation page
+        }
+
+        // POST: Confirmed Delete
+        [HttpPost, ActionName("DeleteOrder")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteOrderConfirmed(int id)
+        {
+            await _adminService.DeleteOrderAsync(id);
+            TempData["Message"] = "Order deleted successfully.";
+            return RedirectToAction(nameof(Orders));
+        }
     }
 }
