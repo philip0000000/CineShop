@@ -12236,11 +12236,11 @@ cow:
     - solid
   unicode: f6c8
   voted: false
-cpanel:
+cDashboard:
   changes:
     - 5.0.0
     - 7.0.0
-  label: Cpanel
+  label: CDashboard
   search:
     terms: []
   styles:
@@ -38774,7 +38774,7 @@ socks:
     - solid
   unicode: f696
   voted: false
-solar-panel:
+solar-Dashboard:
   aliases:
     unicodes:
       secondary:
@@ -38789,7 +38789,7 @@ solar-panel:
     - 6.6.0
     - 6.7.0
     - 7.0.0
-  label: Solar Panel
+  label: Solar Dashboard
   search:
     terms:
       - clean

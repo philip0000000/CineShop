@@ -70,8 +70,8 @@ namespace CineShop.Controllers
             return View("Search", results);
         }
 
-        //    //[Authorize]
-        //    [HttpPost]
+        ////[Authorize]
+        //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public IActionResult Add(int movieId)
         //{

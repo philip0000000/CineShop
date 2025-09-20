@@ -64,7 +64,7 @@ namespace CineShop.Models
                 new Movie { Title = "The Intouchables", Genre = "Comedy", Director = "Olivier Nakache & Éric Toledano", ReleaseYear = 2011, Price = 189.00m, Image = "/images/the intouchables.jpg" },
                 new Movie { Title = "Life Is Beautiful", Genre = "Drama", Director = "Roberto Benigni", ReleaseYear = 1997, Price = 199.00m, Image = "/images/life is beautiful.jpg" },
                 new Movie { Title = "Oldboy", Genre = "Thriller", Director = "Park Chan-wook", ReleaseYear = 2003, Price = 219.00m, Image = "/images/oldboy.jpg" },
-                new Movie { Title = "The Secret in Their Eyes", Genre = "Mystery", Director = "Juan José Campanella", ReleaseYear = 2009, Price = 189.00m, Image = "/images/the secret.jpg" },
+                new Movie { Title = "The Secret in Their Eyes", Genre = "Mystery", Director = "Juan José CamDashboardla", ReleaseYear = 2009, Price = 189.00m, Image = "/images/the secret.jpg" },
                 new Movie { Title = "Your Name", Genre = "Animation", Director = "Makoto Shinkai", ReleaseYear = 2016, Price = 229.00m, Image = "/images/your name.jpg" },
                 new Movie { Title = "The Hunt", Genre = "Drama", Director = "Thomas Vinterberg", ReleaseYear = 2012, Price = 199.00m, Image = "/images/the hunt.jpg" },
                 new Movie { Title = "Incendies", Genre = "Mystery", Director = "Denis Villeneuve", ReleaseYear = 2010, Price = 209.00m, Image = "/images/incendies.jpg" },
