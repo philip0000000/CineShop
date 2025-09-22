@@ -9,26 +9,26 @@ using System.Threading.Tasks;
 
 namespace CineShop.Controllers
 {
-    
+
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
         private readonly ICustomerService _customers;
-        
+
 
         public AdminController(IAdminService adminService, ICustomerService customers)
         {
             _adminService = adminService;
             _customers = customers;
-            
+
         }
 
-       //Admin Dashboard
+        //Admin Dashboard
 
         public IActionResult Index()
         {
             var role = HttpContext.Session.GetString("UserRole");
-                                                                  
+
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace CineShop.Controllers
             return RedirectToAction(nameof(Movies));
         }
 
-        
-         //GET: Admin/DeleteMovie/5
+
+        //GET: Admin/DeleteMovie/5
         public async Task<IActionResult> DeleteMovie(int id)
         {
             var movie = await _adminService.GetMovieByIdAsync(id);
@@ -186,7 +186,7 @@ namespace CineShop.Controllers
 
 
         //[Authorize] Change status to inactive instead for delete
-        
+
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             var customer = await _adminService.GetCustomerByIdAsync(id);
@@ -198,7 +198,7 @@ namespace CineShop.Controllers
             return View(customer);
         }
 
-       
+
         [HttpPost, ActionName("DeleteCustomer")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCustomerConfirmed(int id)
@@ -213,18 +213,18 @@ namespace CineShop.Controllers
 
         //[Authorize]
         //Shows list of Orders
-        public IActionResult Orders()///DONE
+        public async Task<IActionResult> Orders()
         {
-            var orders = _adminService.GetAllOrdersAsync().Result;
+            var orders = await _adminService.GetAllOrdersAsync();
             return View(orders);
         }
 
-        //TO DO
+        [HttpGet]
         public async Task<IActionResult> OrderDetails(int id)
         {
             var order = await _adminService.GetOrderByIdAsync(id);
             if (order == null) return NotFound();
-            return View(order);
+            return View(order); // Views/Admin/OrderDetails.cshtml
         }
 
         [HttpGet]
