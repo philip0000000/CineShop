@@ -1,95 +1,92 @@
-﻿@model IEnumerable<CineShop.ViewModels.CartItem>
+@model IEnumerable<CineShop.ViewModels.CartItem>
+@using System.Globalization
 
 @{
     ViewData["Title"] = "Cart";
-    var hasItems = Model != null && Model.Any();
+    var hasItems = Model?.Any() == true;
+
+    // Use current UI culture for currency.
+    var culture = CultureInfo.CurrentCulture;
 }
 
-<div class="container py-5">
-    <h1 class="text-warning text-center fw-bold mb-4">
-        <i class="fa fa-shopping-cart me-2"></i> Your Cart
-    </h1>
+<h2>Your Cart</h2>
 
-    <p class="lead text-light text-center mb-4">
-        Review your selected movies before checkout. Adjust quantities or continue shopping.
-    </p>
+@if (!hasItems)
+{
+    <p>Your cart is empty.</p>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Movies")">Back to movies</a>
+}
+else
+{
+    <!-- Display all cart items in table -->
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th style="width:40%">Title</th>
+                <th style="width:15%">Price</th>
+                <th style="width:15%">Qty</th>
+                <th style="width:15%">Line total</th>
+                <th style="width:15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @* Loop all items in cart *@
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@(item.Price.ToString("C", culture))</td>
+                    <td>@item.Quantity</td>
+                    <td>@((item.Price * item.Quantity).ToString("C", culture))</td>
+                    <td class="text-nowrap">
 
-    @if (!hasItems)
-    {
-        <div class="alert alert-info text-center fw-bold mb-4">
-            Your cart is empty.
-        </div>
+                        <!-- Add one more of this movie -->
+                        <form asp-action="Add" asp-controller="Cart" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@item.MovieId" />
+                            <button type="submit" class="btn btn-sm btn-success">Add</button>
+                        </form>
 
-        <div class="text-center">
-            <a class="btn btn-outline-warning btn-lg fw-semibold" href="@Url.Action("Index", "Movies")">
-                <i class="fa-solid fa-arrow-left me-2"></i> Back to Movies
-            </a>
-            <a asp-controller="Customer" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4">
-                <i class="fa fa-user me-2"></i> Back to My Dashboard
-            </a>
-        </div>
-    }
-    else
-    {
-        <div class="table-responsive">
-            <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
-                <thead class="table-warning text-dark">
-                    <tr>
-                        <th style="width:40%">Title</th>
-                        <th style="width:15%">Price</th>
-                        <th style="width:15%">Qty</th>
-                        <th style="width:15%">Line Total</th>
-                        <th style="width:15%" class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr class="align-middle">
-                            <td class="text-light">@item.Title</td>
-                            <td class="text-success fw-semibold">@item.Price.ToString("C")</td>
-                            <td class="text-light">@item.Quantity</td>
-                            <td class="text-success fw-semibold">@((item.Price * item.Quantity).ToString("C"))</td>
-                            <td class="text-center text-nowrap">
-                                <form asp-action="Add" asp-controller="Cart" method="post" class="d-inline">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="movieId" value="@item.MovieId" />
-                                    <button type="submit" class="btn btn-sm btn-success" title="Add one more">
-                                        <i class="fa-solid fa-plus"></i>
-                                    </button>
-                                </form>
+                        <!-- Remove one, remove row if 0 -->
+                        <form asp-action="Remove" asp-controller="Cart" method="post" class="d-inline ms-1">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@item.MovieId" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total</strong></td>
+                <td><strong>@(((decimal)ViewBag.Total).ToString("C", culture))</strong></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
 
-                                <form asp-action="Remove" asp-controller="Cart" method="post" class="d-inline ms-1">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="movieId" value="@item.MovieId" />
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Remove one">
-                                        <i class="fa-solid fa-minus"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3" class="text-end text-light fw-bold">Total</td>
-                        <td class="text-success fw-bold">@(((decimal)ViewBag.Total).ToString("C"))</td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+    <div class="d-flex gap-2">
+        @{
+            // Previous page (Referer header)
+            var referer = Context.Request.Headers["Referer"].ToString();
 
-        <div class="text-center mt-4">
-            <a class="btn btn-outline-info btn-lg fw-semibold me-2" href="@Url.Action("Index", "Movies")">
-                <i class="fa-solid fa-basket-shopping me-2"></i> Continue Shopping
-            </a>
-            <a class="btn btn-success btn-lg fw-semibold me-2" href="@Url.Action("Checkout", "Cart")">
-                <i class="fa-solid fa-check me-2"></i> Checkout
-            </a>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-warning btn-lg fw-semibold">
-                <i class="fa-solid fa-house me-2"></i> Back to Home
-            </a>
-        </div>
-    }
-</div>
+            // Homepage (correct domain, not hardcoded)
+            var homepageUrl = Url.Action("Index", "Home", null, Context.Request.Scheme);
+
+            // Movies page (default target)
+            var moviesUrl = Url.Action("Index", "Movies");
+
+            // Default: Movies
+            var continueUrl = moviesUrl;
+
+            if (!string.IsNullOrEmpty(referer) && referer.TrimEnd('/') == homepageUrl.TrimEnd('/'))
+            {
+                // If last page was homepage, go back to homepage
+                continueUrl = homepageUrl;
+            }
+        }
+        <a class="btn btn-secondary" href="@continueUrl">Continue shopping</a>
+        <a class="btn btn-primary" href="@Url.Action("Checkout", "Cart")">Checkout</a>
+    </div>
+}
