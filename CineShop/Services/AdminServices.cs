@@ -17,7 +17,7 @@ namespace CineShop.Services
             _context = context;
         }
 
-        
+
 
         // --- Movie Management ---
         public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
@@ -98,8 +98,10 @@ namespace CineShop.Services
         public async Task<Order?> GetOrderByIdAsync(int id)
         {
             return await _context.Orders
-                .Include(o => o.Customer)
-                .Include(o => o.OrderRows)
+                .AsNoTracking()                  // read-only
+                .Include(o => o.Customer)        // need customer
+                .Include(o => o.OrderRows)       // need rows
+                    .ThenInclude(r => r.Movie)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 
