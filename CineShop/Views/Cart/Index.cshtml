@@ -24,7 +24,7 @@ else
             <tr>
                 <th style="width:40%">Title</th>
                 <th style="width:15%">Price</th>
-                <th style="width:15%">Qty</th>
+                <th style="width:15%">Quantity</th>
                 <th style="width:15%">Line total</th>
                 <th style="width:15%"></th>
             </tr>
@@ -33,26 +33,17 @@ else
             @* Loop all items in cart *@
             @foreach (var item in Model)
             {
-                <tr>
+                <tr id="row-@item.MovieId">
                     <td>@item.Title</td>
-                    <td>@(item.Price.ToString("C", culture))</td>
-                    <td>@item.Quantity</td>
-                    <td>@((item.Price * item.Quantity).ToString("C", culture))</td>
+                    <td>@item.Price.ToString("C", culture)</td>
+                    <td id="qty-@item.MovieId">@item.Quantity</td>
+                    <td id="line-@item.MovieId">@((item.Price * item.Quantity).ToString("C", culture))</td>
+                    
                     <td class="text-nowrap">
-
-                        <!-- Add one more of this movie -->
-                        <form asp-action="Add" asp-controller="Cart" method="post" class="d-inline">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@item.MovieId" />
-                            <button type="submit" class="btn btn-sm btn-success">Add</button>
-                        </form>
-
-                        <!-- Remove one, remove row if 0 -->
-                        <form asp-action="Remove" asp-controller="Cart" method="post" class="d-inline ms-1">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@item.MovieId" />
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-                        </form>
+                        <!-- add with ajax -->
+                        <button type="button" class="btn btn-sm btn-success" onclick="addToCart(@item.MovieId)">Add</button>
+                        <!-- remove with ajax -->
+                        <button type="button" class="btn btn-sm btn-danger ms-1" onclick="removeFromCart(@item.MovieId)">Remove</button>
                     </td>
                 </tr>
             }
@@ -60,7 +51,7 @@ else
         <tfoot>
             <tr>
                 <td colspan="3" class="text-end"><strong>Total</strong></td>
-                <td><strong>@(((decimal)ViewBag.Total).ToString("C", culture))</strong></td>
+                <td><strong id="cartTotal">@(((decimal)ViewBag.Total).ToString("C", culture))</strong></td>
                 <td></td>
             </tr>
         </tfoot>
@@ -68,22 +59,26 @@ else
 
     <div class="d-flex gap-2">
         @{
-            // Previous page (Referer header)
-            var referer = Context.Request.Headers["Referer"].ToString();
-
-            // Homepage (correct domain, not hardcoded)
-            var homepageUrl = Url.Action("Index", "Home", null, Context.Request.Scheme);
-
-            // Movies page (default target)
-            var moviesUrl = Url.Action("Index", "Movies");
-
             // Default: Movies
+            var moviesUrl = Url.Action("Index", "Movies");
             var continueUrl = moviesUrl;
 
-            if (!string.IsNullOrEmpty(referer) && referer.TrimEnd('/') == homepageUrl.TrimEnd('/'))
+            var referer = Context.Request.Headers["Referer"].ToString();
+
+            if (Uri.TryCreate(referer, UriKind.Absolute, out var refUri))
             {
-                // If last page was homepage, go back to homepage
-                continueUrl = homepageUrl;
+                var currentHost = Context.Request.Host;
+                var sameHost = string.Equals(refUri.Host, currentHost.Host, StringComparison.OrdinalIgnoreCase)
+                && (refUri.Port == (currentHost.Port ?? refUri.Port));
+
+                var isCartPath = refUri.AbsolutePath.StartsWith("/Cart", StringComparison.OrdinalIgnoreCase);
+
+                // Use the last page only if it's same-site and not a Cart URL
+                if (sameHost && !isCartPath)
+                {
+                    // You can use refUri.ToString() for absolute, or PathAndQuery for relative
+                    continueUrl = refUri.PathAndQuery;
+                }
             }
         }
         <a class="btn btn-secondary" href="@continueUrl">Continue shopping</a>
@@ -94,3 +89,98 @@ else
 
    
 }
+
+<script>
+// add one item
+function addToCart(movieId) {
+    fetch('/Cart/AddToCart?id=' + movieId)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            // update qty
+            var qtyCell = document.getElementById('qty-' + data.movieId);
+            if (qtyCell) {
+                qtyCell.textContent = data.qty;
+            } else {
+                console.warn("Element with ID 'qty-" + data.movieId + "' not found.");
+            }
+
+            // update line total
+            var lineCell = document.getElementById('line-' + data.movieId);
+            if (lineCell) {
+                lineCell.textContent = data.lineTotal;
+            } else {
+                console.warn("Element with ID 'line-" + data.movieId + "' not found.");
+            }
+
+            // update cart total
+            var cartTotal = document.getElementById('cartTotal');
+            if (cartTotal) {
+                cartTotal.textContent = data.cartTotal;
+            } else {
+                console.warn("Element with ID 'cartTotal' not found.");
+            }
+
+            // if 0, remove row
+            if (data.qty === 0) {
+                var row = document.getElementById('row-' + data.movieId);
+                if (row) row.remove();
+            }
+
+            // success feedback
+            // Item added
+        })
+        .catch(function (error) {
+            console.error('Error adding item to cart:', error);
+            alert("Could not add item. Try again.");
+        });
+}
+
+// remove one item
+function removeFromCart(movieId) {
+    fetch('/Cart/RemoveFromCart?id=' + movieId)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            var qtyCell = document.getElementById('qty-' + data.movieId);
+            if (qtyCell) {
+                qtyCell.textContent = data.qty;
+            } else {
+                console.warn("Element with ID 'qty-" + data.movieId + "' not found.");
+            }
+
+            var lineCell = document.getElementById('line-' + data.movieId);
+            if (lineCell) {
+                lineCell.textContent = data.lineTotal;
+            } else {
+                console.warn("Element with ID 'line-" + data.movieId + "' not found.");
+            }
+
+            var cartTotal = document.getElementById('cartTotal');
+            if (cartTotal) {
+                cartTotal.textContent = data.cartTotal;
+            } else {
+                console.warn("Element with ID 'cartTotal' not found.");
+            }
+
+            if (data.qty === 0) {
+                var row = document.getElementById('row-' + data.movieId);
+                if (row) row.remove();
+            }
+
+            // Item removed
+        })
+        .catch(function (error) {
+            console.error('Error removing item from cart:', error);
+            alert("Could not remove item. Try again.");
+        });
+}
+</script>

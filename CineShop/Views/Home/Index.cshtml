@@ -147,10 +147,15 @@
                                class="btn btn-outline-info btn-sm">
                                 <i class="fa fa-info-circle me-1"></i> Details
                             </a>
-                            <a asp-controller="Cart" asp-action="Add" asp-route-id="@movie.Id"
-                               class="btn btn-outline-success btn-sm">
-                                <i class="fa fa-cart-plus me-1"></i> Add to Cart
-                            </a>
+
+                            <!-- Add to cart POST form -->
+                            <form asp-controller="Cart" asp-action="Add" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="movieId" value="@movie.Id" />
+                                <button type="submit" class="btn btn-outline-success btn-sm">
+                                    <i class="fa fa-cart-plus me-1"></i> Add to Cart
+                                </button>
+                            </form>
 
                         </div>
                     </div>
