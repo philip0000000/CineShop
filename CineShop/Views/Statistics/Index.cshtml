@@ -1,4 +1,4 @@
-﻿@model CineShop.ViewModels.HomeStatisticsViewModel
+﻿@* @model CineShop.ViewModels.HomeStatisticsViewModel
 
 @{
     ViewData["Title"] = "Admin Dashboard";
@@ -148,6 +148,191 @@
                     else
                     {
                         <p class="text-muted">No top spender data available yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+
+@model CineShop.ViewModels.HomeStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="text-warning fw-bold display-5">
+            <i class="fa fa-chart-bar me-2"></i> CineShop Admin Insights
+        </h1>
+        <p class="lead text-light">
+            Monitor trends, track performance, and celebrate your top customers.
+        </p>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-warning btn-lg fw-semibold mt-3">
+            <i class="fa fa-tools me-2"></i> Back to Admin Dashboard
+        </a>
+    </div>
+
+    <!-- First Row: Most Popular & Newest Releases -->
+    <div class="row g-4 mb-5">
+        <!-- Most Popular Movies -->
+        <div class="col-md-6">
+            <h4 class="text-warning fw-bold mb-3">
+                <i class="fa fa-fire me-2"></i> Most Popular Movies
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
+                    <thead class="table-warning text-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.MostPopularMovies?.Any() == true)
+                        {
+                            @foreach (var movie in Model.MostPopularMovies)
+                            {
+                                <tr>
+                                    <td class="text-light">@movie.Title</td>
+                                    <td class="text-success fw-semibold">@movie.Price.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="2" class="text-muted">No popularity data available.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Newest Releases -->
+        <div class="col-md-6">
+            <h4 class="text-info fw-bold mb-3">
+                <i class="fa fa-calendar-plus me-2"></i> Newest Releases
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover border border-info rounded overflow-hidden">
+                    <thead class="table-info text-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Release Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.NewestMovies?.Any() == true)
+                        {
+                            @foreach (var movie in Model.NewestMovies)
+                            {
+                                <tr>
+                                    <td class="text-light">@movie.Title</td>
+                                    <td class="text-light">@movie.ReleaseYear</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="2" class="text-muted">No recent movies found.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row: Oldest Titles & Cheapest Picks -->
+    <div class="row g-4 mb-5">
+        <!-- Oldest Titles -->
+        <div class="col-md-6">
+            <h4 class="text-secondary fw-bold mb-3">
+                <i class="fa fa-hourglass-start me-2"></i> Oldest Titles
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover border border-secondary rounded overflow-hidden">
+                    <thead class="table-secondary text-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Release Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.OldestMovies?.Any() == true)
+                        {
+                            @foreach (var movie in Model.OldestMovies)
+                            {
+                                <tr>
+                                    <td class="text-light">@movie.Title</td>
+                                    <td class="text-light">@movie.ReleaseYear</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="2" class="text-muted">No archival titles available.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Cheapest Picks -->
+        <div class="col-md-6">
+            <h4 class="text-success fw-bold mb-3">
+                <i class="fa fa-coins me-2"></i> Cheapest Picks
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover border border-success rounded overflow-hidden">
+                    <thead class="table-success text-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.CheapestMovies?.Any() == true)
+                        {
+                            @foreach (var movie in Model.CheapestMovies)
+                            {
+                                <tr>
+                                    <td class="text-light">@movie.Title</td>
+                                    <td class="text-success fw-semibold">@movie.Price.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="2" class="text-muted">No pricing data available.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Customer -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <h4 class="text-warning fw-bold mb-3 text-center">
+                <i class="fa fa-crown me-2"></i> Top Customer
+            </h4>
+            <div class="card bg-dark border-warning shadow-sm">
+                <div class="card-body">
+                    @if (Model.TopSpendingCustomer != null)
+                    {
+                        <p class="text-light mb-2 text-center">
+                            <strong>@Model.TopSpendingCustomer.EmailAddress</strong> has spent the most on movie purchases.
+                        </p>
+                        <p class="text-muted small text-center">Thank you for being our most loyal movie enthusiast!</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center">No top spender data available yet.</p>
                     }
                 </div>
             </div>

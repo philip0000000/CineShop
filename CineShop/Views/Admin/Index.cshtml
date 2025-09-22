@@ -1,37 +1,66 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var role = Context.Session.GetString("UserRole");
+    var isAdmin = role == "Admin";
 }
 
-<div class="container py-5">
-    <h1 class="text-warning text-center fw-bold mb-4">
-        <i class="fa fa-tools me-2"></i> Admin Dashboard
-    </h1>
-    <p class="lead text-light text-center mb-5">
-        Welcome back, curator. Choose a Dashboard to manage your CineShop empire.
-    </p>
+<div class="container py-5 @(isAdmin ? "admin-theme" : "")">
+    <!-- Admin Banner -->
+    @if (isAdmin)
+    {
+        <div class="admin-banner text-dark fw-bold text-center py-2 mb-4 rounded shadow-sm">
+            <i class="fa fa-user-shield me-2"></i> You are logged in as <span class="text-uppercase">ADMIN</span>
+        </div>
+    }
 
-    <div class="d-flex flex-column align-items-center gap-3">
-        <a asp-action="Movies" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
-            <i class="fa-solid fa-list-check"></i> Manage Movies
-        </a>
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="text-warning fw-bold display-5">
+            <i class="fa fa-tools me-2"></i> Admin Dashboard
+        </h1>
+        <p class="lead text-light">
+            Welcome back, curator. Choose a dashboard to manage your CineShop empire.
+        </p>
+    </div>
 
-        <a asp-action="Customers" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
-            <i class="fa-solid fa-list-check"></i> Manage Customers
-        </a>
-        <a asp-action="Orders" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
-            <i class="fa-solid fa-eye"></i> View Orders
-        </a>
-        @* <a asp-controller="Orders" asp-action="AdminOrders" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
-            <i class="fa-solid fa-eye"></i> View Orders
-        </a> *@
+    <!-- Dashboard Buttons -->
+    <div class="row justify-content-center g-4">
+        <div class="col-md-6 text-center">
+            <a asp-action="Movies" class="btn btn-outline-warning btn-lg fw-semibold px-4 shadow-sm w-100">
+                <i class="fa-solid fa-list-check me-2"></i> Manage Movies
+            </a>
+        </div>
 
+        <div class="col-md-6 text-center">
+            <a asp-action="Customers" class="btn btn-outline-warning btn-lg fw-semibold px-4 shadow-sm w-100">
+                <i class="fa-solid fa-users me-2"></i> Manage Customers
+            </a>
+        </div>
 
-        <a asp-controller="Statistics" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4  shadow-sm">
-            <i class="fa-solid fa-chart-simple"></i> View Statisctics
-        </a>
-        <a asp-controller="Login" asp-action="Logout" class="btn btn-outline-warning fw-bold">
-            <i class="fa-solid fa-right-from-bracket me-1"></i> Log Out
-        </a>
+        <div class="col-md-6 text-center">
+            <a asp-action="Orders" class="btn btn-outline-warning btn-lg fw-semibold px-4 shadow-sm w-100">
+                <i class="fa-solid fa-eye me-2"></i> View Orders
+            </a>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <a asp-controller="Statistics" asp-action="Index" class="btn btn-outline-warning btn-lg fw-semibold px-4 shadow-sm w-100">
+                <i class="fa-solid fa-chart-simple me-2"></i> View Statistics
+            </a>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-success btn-lg fw-semibold px-4 shadow-sm w-100">
+                <i class="fa-solid fa-house me-2"></i> Back to Home
+            </a>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <a asp-controller="Login" asp-action="Logout" class="btn btn-outline-danger btn-lg fw-semibold px-4 shadow-sm w-100">
+                <i class="fa-solid fa-right-from-bracket me-2"></i> Log Out
+            </a>
+        </div>
     </div>
 </div>

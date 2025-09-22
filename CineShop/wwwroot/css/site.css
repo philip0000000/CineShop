@@ -21,6 +21,78 @@ body {
   margin-bottom: 60px;
 }*/
 /* Sayfa genel görünümü */
+/*
+.admin-theme {
+    background-color: #3B2F2F;
+    color: #F5F5DC;
+}
+
+.admin-banner {
+    background-color: #FFD700;
+    box-shadow: 0 0 12px #FFD700;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.admin-theme .table-dark {
+    background-color: #2E1E1E;
+    color: #F5F5DC;
+}
+
+.admin-theme .table-warning {
+    background-color: #FFD700;
+    color: #000;
+}
+
+.admin-theme .btn-outline-warning {
+    border-color: #FFD700;
+    color: #FFD700;
+}
+
+.admin-theme .btn-outline-success {
+    border-color: #39FF14;
+    color: #39FF14;
+}
+
+.admin-theme .btn-outline-info {
+    border-color: #00BFFF;
+    color: #00BFFF;
+}
+
+.admin-theme .btn-outline-danger {
+    border-color: #FF4040;
+    color: #FF4040;
+}*/
+
+.admin-theme {
+    background-color: #3B2F2F; /* Rich dark brown */
+    color: #F5F5DC; /* Light beige */
+}
+
+.admin-banner {
+    background-color: #FFD700;
+    box-shadow: 0 0 12px #FFD700;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.admin-theme .btn-outline-warning {
+    border-color: #FFD700;
+    color: #FFD700;
+}
+
+.admin-theme .btn-outline-success {
+    border-color: #39FF14;
+    color: #39FF14;
+}
+
+.admin-theme .btn-outline-danger {
+    border-color: #FF4040;
+    color: #FF4040;
+}
+
+
+
 
 .movie-poster {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
