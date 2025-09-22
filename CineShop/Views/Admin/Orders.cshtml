@@ -3,23 +3,37 @@
 @{
     ViewData["Title"] = "All Orders";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var role = Context.Session.GetString("UserRole");
+    var isAdmin = role == "Admin";
 }
 
-<div class="container py-5">
-    <h1 class="text-warning text-center fw-bold mb-4">
-        <i class="fa fa-receipt me-2"></i> All Orders
-    </h1>
-    <p class="lead text-light text-center mb-4">
-        Review every purchase made in CineShop—sorted from newest to oldest.
-    </p>
+<div class="container py-5 @(isAdmin ? "admin-theme" : "")">
+    <!-- Admin Banner -->
+    @if (isAdmin)
+    {
+        <div class="admin-banner text-dark fw-bold text-center py-2 mb-4 rounded shadow-sm">
+            <i class="fa fa-user-shield me-2"></i> You are logged in as <span class="text-uppercase">ADMIN</span>
+        </div>
+    }
 
-    <div class="text-center mb-4">
-       <a asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
-          <i class="fa fa-tools me-2"></i>Back to Admin Dashboard
-       </a>
-     
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 text-warning fw-bold">
+            <i class="fa fa-receipt me-2"></i> All Orders
+        </h1>
+        <p class="lead text-light">
+            Review every purchase made in CineShop—sorted from newest to oldest.
+        </p>
+
+        <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+            <a asp-action="Index" class="btn btn-outline-success btn-lg fw-semibold px-4 shadow-sm">
+                <i class="fa fa-tools me-2"></i> Back to Admin Dashboard
+            </a>
+        </div>
     </div>
 
+    <!-- Orders Table -->
     <div class="table-responsive">
         <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
             <thead class="table-warning text-dark">
@@ -36,7 +50,7 @@
                 @foreach (var order in Model.OrderByDescending(o => o.OrderDate))
                 {
                     var totalPrice = order.OrderRows?.Sum(row => row.Price) ?? 0;
-                    var customerEmail = order.Customer != null ? order.Customer.EmailAddress : "Unknown";
+                    var customerEmail = order.Customer?.EmailAddress ?? "Unknown";
 
                     <tr class="align-middle">
                         <td class="text-light">@order.Id</td>
@@ -44,7 +58,7 @@
                         <td class="text-light">@order.OrderDate.ToShortDateString()</td>
                         <td class="text-light">@((order.OrderRows?.Count()) ?? 0)</td>
                         <td class="text-success fw-semibold">@totalPrice.ToString("C")</td>
-                        <td class="text-center">
+                        <td class="text-center text-nowrap">
                             <a asp-action="EditOrder" asp-route-id="@order.Id" class="btn btn-sm btn-outline-warning me-2" title="Edit Order">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
