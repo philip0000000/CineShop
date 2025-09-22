@@ -6,26 +6,30 @@
 }
 
 <div class="container py-5">
-    <!-- Header -->
-    <h1 class="text-warning text-center fw-bold mb-4">
-        <i class="fa fa-search me-2"></i> Search for a Movie
-    </h1>
-    <p class="lead text-light text-center mb-4">
-        Enter a movie title to explore your CineShop collection.
-    </p>
+    
+    <div class="text-center mb-5">
+        <h1 class="text-warning fw-bold display-5">
+            <i class="fa fa-search me-2"></i> Search for a Movie
+        </h1>
+        <p class="lead text-light">
+            Enter a movie title to explore your CineShop collection.
+        </p>
+    </div>
 
-    <!-- Search Form -->
+   
     <div class="row justify-content-center mb-5">
         <div class="col-md-6">
-            <div class="card bg-dark text-light border-warning shadow-sm">
+            <div class="card bg-dark border-warning shadow-sm">
+                <div class="card-header text-warning fw-semibold">
+                    <i class="fa fa-keyboard me-2"></i> Search Input
+                </div>
                 <div class="card-body">
-                    <form asp-action="ShowSearchResult" method="post">
+                    <form asp-action="ShowSearchResult" method="post" novalidate>
                         <div class="mb-3">
                             <label for="SearchPhrase" class="form-label text-warning fw-semibold">Movie Title</label>
                             <input name="SearchPhrase" class="form-control bg-dark text-light border-warning"
                                    placeholder="e.g. Inception" value="@ViewBag.SearchPhrase" />
                         </div>
-
                         <div class="d-grid">
                             <button type="submit" class="btn btn-warning fw-bold">
                                 <i class="fa fa-search me-2"></i> Search
@@ -37,27 +41,26 @@
         </div>
     </div>
 
-    <!-- Message Only -->
+    
     @if (ViewBag.ShowResults == false && ViewBag.Message != null)
     {
         <div class="alert alert-info text-center fw-bold mb-4">
             @ViewBag.Message
         </div>
 
-        <div class="text-center mb-5 d-flex justify-content-center gap-3">
-            <a asp-controller="Movies" asp-action="ShowSearchForm" class="btn btn-warning fw-bold px-4">
-                <i class="fa-solid fa-rotate-left me-2"></i> Back to Search
-            </a>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-warning fw-bold px-4">
+        <div class="text-center d-flex justify-content-center flex-wrap gap-3 mb-5">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-success btn-lg fw-semibold px-4 shadow-sm">
                 <i class="fa-solid fa-house me-2"></i> Back to Home
             </a>
         </div>
     }
 
-    <!-- Results Only -->
+    
     @if (ViewBag.ShowResults == true && Model != null && Model.Any())
     {
-        <h2 class="text-light text-center mb-4">Search Results</h2>
+        <h2 class="text-light text-center mb-4">
+            <i class="fa fa-clapperboard me-2"></i> Search Results
+        </h2>
         <div class="row g-4">
             @foreach (var movie in Model)
             {

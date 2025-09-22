@@ -1,42 +1,4 @@
-﻿@* @model IEnumerable<CineShop.Models.Movie>
-
-@{
-    ViewData["Title"] = "Browse Movies";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<div class="text-center my-5">
-    <h1 class="display-4 text-warning fw-bold">
-        <i class="fa fa-film me-2"></i> Browse Movies
-    </h1>
-    <p class="lead text-light">
-        Discover your next favorite film—from Nordic dramas to cozy thrillers.
-    </p>
-</div>
-
-<div class="mt-4">
-    <a asp-action="AddMovie" class="btn btn-warning btn-lg fw-semibold me-2">
-        <i class="fa fa-plus-circle me-1"></i> Add New Movie
-    </a>
-    <a asp-action="Index" class="btn btn-warning btn-lg fw-semibold me-2">
-        <i class="fa fa-tools me-2"></i>
-        Back to Admin Dashboard
-    </a>
-
-
-</div>
-
-<div class="container py-4">
-    <div class="row g-4">
-        @foreach (var movie in Model)
-        {
-            @Html.Partial("_MovieCardPartial", movie)
-        }
-    </div>
-</div>
- *@
-
-@model IEnumerable<CineShop.Models.Movie>?
+﻿@model IEnumerable<CineShop.Models.Movie>?
 
 @{
     ViewData["Title"] = "Browse Movies";
@@ -46,34 +8,57 @@
     var isAdmin = role == "Admin";
 }
 
-<div class="text-center my-5">
-    <h1 class="display-4 text-warning fw-bold">
-        <i class="fa fa-film me-2"></i> Browse Movies
-    </h1>
-    <p class="lead text-light">
-        Discover your next favorite film—from Nordic dramas to cozy thrillers.
-    </p>
-</div>
-
-<div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+<div class="container py-5 @(isAdmin ? "admin-theme" : "")">
+ 
     @if (isAdmin)
     {
-        <a asp-controller="Admin" asp-action="AddMovie" class="btn btn-warning btn-lg fw-semibold">
-            <i class="fa fa-plus-circle me-1"></i> Add New Movie
-        </a>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-warning btn-lg fw-semibold">
-            <i class="fa fa-tools me-2"></i> Back to Admin Dashboard
-        </a>
+        <div class="admin-banner text-dark fw-bold text-center py-2 mb-4 rounded shadow-sm">
+            <i class="fa fa-user-shield me-2"></i> You are logged in as <span class="text-uppercase">ADMIN</span>
+        </div>
     }
-    else
-    {
-        <a asp-controller="Customer" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4 shadow-sm">
-            <i class="fa fa-user me-2"></i> Back to My Dashboard
-        </a>
-    }
-</div>
 
-<div class="container py-4">
+  
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-warning fw-bold">
+            <i class="fa fa-film me-2"></i> Browse Movies
+        </h1>
+        <p class="lead text-light">
+            @if (isAdmin)
+            {
+                <span>Manage your CineShop catalog—add, edit, or review movie listings.</span>
+            }
+            else
+            {
+                <span>Discover your next favorite film—from Nordic dramas to cozy thrillers.</span>
+            }
+        </p>
+    </div>
+
+   
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+        @if (isAdmin)
+        {
+            <a asp-controller="Admin" asp-action="AddMovie" class="btn btn-outline-warning fw-semibold px-4 shadow-sm">
+                <i class="fa fa-plus-circle me-2"></i> Add New Movie
+            </a>
+            <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-success fw-semibold px-4 shadow-sm">
+                <i class="fa fa-tools me-2"></i> Admin Dashboard
+            </a>
+            <a asp-controller="Login" asp-action="Logout" class="btn btn-outline-danger fw-semibold px-4 shadow-sm">
+                <i class="fa fa-right-from-bracket me-2"></i> Log Out
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Customer" asp-action="Index" class="btn btn-outline-warning fw-bold px-4 shadow-sm">
+                <i class="fa fa-user me-2"></i> Back to My Dashboard
+            </a>
+        }
+
+        
+    </div>
+
+   
     <div class="row g-4">
         @foreach (var movie in Model)
         {
