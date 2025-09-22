@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<CineShop.ViewModels.CartItem>
+@using System.Globalization
 
 @{
     ViewData["Title"] = "Cart";
-    var hasItems = Model != null && Model.Any();
+    var hasItems = Model?.Any() == true;
+
+    // Use current UI culture for currency.
+    var culture = CultureInfo.CurrentCulture;
 }
 
 <h2>Your Cart</h2>
@@ -14,6 +18,7 @@
 }
 else
 {
+    <!-- Display all cart items in table -->
     <table class="table table-striped align-middle">
         <thead>
             <tr>
@@ -25,22 +30,24 @@ else
             </tr>
         </thead>
         <tbody>
+            @* Loop all items in cart *@
             @foreach (var item in Model)
             {
                 <tr>
                     <td>@item.Title</td>
-                    <td>@item.Price.ToString("0.00")</td>
+                    <td>@(item.Price.ToString("C", culture))</td>
                     <td>@item.Quantity</td>
-                    <td>@(item.Price* item.Quantity).ToString("0.00")</td>
+                    <td>@((item.Price * item.Quantity).ToString("C", culture))</td>
                     <td class="text-nowrap">
-                        <!-- +1 -->
+
+                        <!-- Add one more of this movie -->
                         <form asp-action="Add" asp-controller="Cart" method="post" class="d-inline">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="movieId" value="@item.MovieId" />
                             <button type="submit" class="btn btn-sm btn-success">Add</button>
                         </form>
 
-                        <!-- -1 (remove one, remove row at 0) -->
+                        <!-- Remove one, remove row if 0 -->
                         <form asp-action="Remove" asp-controller="Cart" method="post" class="d-inline ms-1">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="movieId" value="@item.MovieId" />
@@ -53,14 +60,33 @@ else
         <tfoot>
             <tr>
                 <td colspan="3" class="text-end"><strong>Total</strong></td>
-                <td><strong>@((decimal)ViewBag.Total).ToString("0.00")</strong></td>
+                <td><strong>@(((decimal)ViewBag.Total).ToString("C", culture))</strong></td>
                 <td></td>
             </tr>
         </tfoot>
     </table>
 
     <div class="d-flex gap-2">
-        <a class="btn btn-secondary" href="@Url.Action("Index", "Movies")">Continue shopping</a>
+        @{
+            // Previous page (Referer header)
+            var referer = Context.Request.Headers["Referer"].ToString();
+
+            // Homepage (correct domain, not hardcoded)
+            var homepageUrl = Url.Action("Index", "Home", null, Context.Request.Scheme);
+
+            // Movies page (default target)
+            var moviesUrl = Url.Action("Index", "Movies");
+
+            // Default: Movies
+            var continueUrl = moviesUrl;
+
+            if (!string.IsNullOrEmpty(referer) && referer.TrimEnd('/') == homepageUrl.TrimEnd('/'))
+            {
+                // If last page was homepage, go back to homepage
+                continueUrl = homepageUrl;
+            }
+        }
+        <a class="btn btn-secondary" href="@continueUrl">Continue shopping</a>
         <a class="btn btn-primary" href="@Url.Action("Checkout", "Cart")">Checkout</a>
     </div>
 }
