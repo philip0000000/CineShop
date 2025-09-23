@@ -1,4 +1,4 @@
-@model IEnumerable<CineShop.ViewModels.CartItem>
+@* @model IEnumerable<CineShop.ViewModels.CartItem>
 @using System.Globalization
 
 @{
@@ -31,7 +31,7 @@ else
         </thead>
         <tbody>
             @* Loop all items in cart *@
-            @foreach (var item in Model)
+            @* @foreach (var item in Model)
             {
                 <tr id="row-@item.MovieId">
                     <td>@item.Title</td>
@@ -85,9 +85,9 @@ else
         <a class="btn btn-primary" href="@Url.Action("Checkout", "Cart")">Checkout</a>
         
 
-    </div>
+    </div> *@
 
-   
+@*    
 }
 
 <script>
@@ -140,7 +140,7 @@ function addToCart(movieId) {
         });
 }
 
-// remove one item
+ *@@* // remove one item
 function removeFromCart(movieId) {
     fetch('/Cart/RemoveFromCart?id=' + movieId)
         .then(function (response) {
@@ -183,4 +183,149 @@ function removeFromCart(movieId) {
             alert("Could not remove item. Try again.");
         });
 }
+</script>
+ *@
+
+@model IEnumerable<CineShop.ViewModels.CartItem>
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Cart";
+    var hasItems = Model?.Any() == true;
+    var culture = CultureInfo.CurrentCulture;
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 text-warning fw-bold">
+            <i class="fa fa-shopping-cart me-2"></i> Your Cart
+        </h1>
+        <p class="lead text-light">
+            @(hasItems ? "Review your selected movies and proceed to checkout when you're ready." : "Your cart is currently empty. Time to explore some cinematic gems!")
+        </p>
+    </div>
+
+    @if (!hasItems)
+    {
+        <div class="text-center mb-4">
+            <a class="btn btn-outline-success btn-lg fw-semibold px-4 shadow-sm" href="@Url.Action("Index", "Movies")">
+                <i class="fa fa-film me-2"></i> Back to Movies
+            </a>
+            <a class="btn btn-outline-warning btn-lg fw-semibold px-4 shadow-sm" href="@Url.Action("Index", "Home")">
+                <i class="fa fa-house me-2"></i> Back to Home
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive mb-4">
+            <table class="table table-dark table-hover border border-warning rounded overflow-hidden">
+                <thead class="table-warning text-dark">
+                    <tr>
+                        <th style="width:40%">Title</th>
+                        <th style="width:15%">Price</th>
+                        <th style="width:15%">Quantity</th>
+                        <th style="width:15%">Line total</th>
+                        <th style="width:15%" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row-@item.MovieId" class="align-middle">
+                            <td class="text-light">@item.Title</td>
+                            <td class="text-light">@item.Price.ToString("C", culture)</td>
+                            <td class="text-light" id="qty-@item.MovieId">@item.Quantity</td>
+                            <td class="text-success fw-semibold" id="line-@item.MovieId">@((item.Price * item.Quantity).ToString("C", culture))</td>
+                            <td class="text-center text-nowrap">
+                                <button type="button" class="btn btn-sm btn-outline-success me-1" onclick="addToCart(@item.MovieId)">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFromCart(@item.MovieId)">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end text-light fw-bold">Total</td>
+                        <td class="text-success fw-bold" id="cartTotal">@(((decimal)ViewBag.Total).ToString("C", culture))</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            @{
+                var moviesUrl = Url.Action("Index", "Movies");
+                var continueUrl = moviesUrl;
+                var referer = Context.Request.Headers["Referer"].ToString();
+
+                if (Uri.TryCreate(referer, UriKind.Absolute, out var refUri))
+                {
+                    var currentHost = Context.Request.Host;
+                    var sameHost = string.Equals(refUri.Host, currentHost.Host, StringComparison.OrdinalIgnoreCase)
+                    && (refUri.Port == (currentHost.Port ?? refUri.Port));
+
+                    var isCartPath = refUri.AbsolutePath.StartsWith("/Cart", StringComparison.OrdinalIgnoreCase);
+
+                    if (sameHost && !isCartPath)
+                    {
+                        continueUrl = refUri.PathAndQuery;
+                    }
+                }
+            }
+
+            <a class="btn btn-outline-success btn-lg fw-semibold px-4 shadow-sm" href="@continueUrl">
+                <i class="fa fa-arrow-left me-2"></i> Continue Shopping
+            </a>
+            <a class="btn btn-outline-info btn-lg fw-semibold px-4 shadow-sm" href="@Url.Action("Checkout", "Cart")">
+                <i class="fa fa-credit-card me-2"></i> Checkout
+            </a>
+            <a class="btn btn-outline-warning btn-lg fw-semibold px-4 shadow-sm" href="@Url.Action("Index", "Home")">
+                <i class="fa fa-house me-2"></i> Back to Home
+            </a>
+        </div>
+    }
+</div>
+
+<script>
+    function addToCart(movieId) {
+        fetch('/Cart/AddToCart?id=' + movieId)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('qty-' + data.movieId).textContent = data.qty;
+                document.getElementById('line-' + data.movieId).textContent = data.lineTotal;
+                document.getElementById('cartTotal').textContent = data.cartTotal;
+                if (data.qty === 0) document.getElementById('row-' + data.movieId)?.remove();
+            })
+            .catch(error => {
+                console.error('Error adding item to cart:', error);
+                alert("Could not add item. Try again.");
+            });
+    }
+
+    function removeFromCart(movieId) {
+        fetch('/Cart/RemoveFromCart?id=' + movieId)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('qty-' + data.movieId).textContent = data.qty;
+                document.getElementById('line-' + data.movieId).textContent = data.lineTotal;
+                document.getElementById('cartTotal').textContent = data.cartTotal;
+                if (data.qty === 0) document.getElementById('row-' + data.movieId)?.remove();
+            })
+            .catch(error => {
+                console.error('Error removing item from cart:', error);
+                alert("Could not remove item. Try again.");
+            });
+    }
 </script>
